@@ -18,7 +18,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function(){
     /* ── Section scroll tracking ── */
-    var sections = ['about','skills','experience','blogs','contact'];
+    var sections = ['about','skills','experience','blogs','book','contact'];
     var tracked = {};
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
@@ -132,10 +132,15 @@ a{text-decoration:none;color:inherit}
 
 /* ── HERO ── */
 #hero{
-  min-height:100vh;display:flex;align-items:center;
-  padding:0 10%;position:relative;overflow:hidden;
+  min-height:auto;display:flex;align-items:center;
+  padding:5rem 8% 3.5rem;position:relative;overflow:hidden;
   background:linear-gradient(135deg,#f0f7ff 0%,#ffffff 50%,#f5f3ff 100%);
 }
+.hero-layout{
+  display:grid;grid-template-columns:1fr 1fr;align-items:start;
+  gap:3rem;width:100%;position:relative;z-index:2;
+}
+@media(max-width:960px){.hero-layout{grid-template-columns:1fr;gap:3rem}}
 .hero-dots{
   position:absolute;inset:0;pointer-events:none;
   background-image:radial-gradient(circle,#cbd5e1 1px,transparent 1px);
@@ -144,13 +149,13 @@ a{text-decoration:none;color:inherit}
 }
 .hero-blob1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.07) 0%,transparent 70%);top:-10%;right:-5%;pointer-events:none}
 .hero-blob2{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.06) 0%,transparent 70%);bottom:5%;left:5%;pointer-events:none}
-.hero-inner{position:relative;z-index:2;max-width:740px}
+.hero-inner{position:relative;z-index:2;max-width:100%}
 .hero-badge{
   display:inline-flex;align-items:center;gap:.5rem;
   background:var(--blue-light);border:1px solid var(--blue-mid);
   color:var(--blue);padding:.35rem 1rem;border-radius:50px;
   font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  margin-bottom:1.8rem;opacity:0;animation:fadeUp .6s .2s ease forwards;
+  margin-bottom:1rem;opacity:0;animation:fadeUp .6s .2s ease forwards;
 }
 .hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
@@ -158,21 +163,21 @@ a{text-decoration:none;color:inherit}
   font-family:'Bricolage Grotesque',sans-serif;
   font-size:clamp(2.8rem,7vw,5.5rem);font-weight:800;
   line-height:.95;color:var(--navy);letter-spacing:-.03em;
-  margin-bottom:.7rem;opacity:0;animation:fadeUp .8s .4s ease forwards;
+  margin-bottom:.4rem;opacity:0;animation:fadeUp .8s .4s ease forwards;
 }
 .hero-name .hi{color:var(--blue)}
 .hero-tagline{
   font-family:'Bricolage Grotesque',sans-serif;
   font-size:clamp(1rem,2.5vw,1.4rem);font-weight:600;
-  color:var(--body);margin-bottom:1.6rem;min-height:2em;
+  color:var(--body);margin-bottom:1rem;min-height:1.8em;
   opacity:0;animation:fadeUp .8s .6s ease forwards;
 }
 .typed-text{color:var(--blue);font-weight:700}
 .cursor-blink{color:var(--blue);animation:blink .8s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .hero-bio{
-  font-size:1.02rem;color:var(--body);line-height:1.85;max-width:560px;
-  margin-bottom:2.4rem;opacity:0;animation:fadeUp .8s .75s ease forwards;
+  font-size:1.02rem;color:var(--body);line-height:1.75;max-width:560px;
+  margin-bottom:1.4rem;opacity:0;animation:fadeUp .8s .75s ease forwards;
 }
 .hero-bio strong{color:var(--navy);font-weight:700}
 .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .9s ease forwards}
@@ -181,7 +186,7 @@ a{text-decoration:none;color:inherit}
 .btn-outline{padding:.82rem 2rem;background:transparent;color:var(--navy);border:2px solid var(--border2);border-radius:8px;font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .28s;font-family:'Plus Jakarta Sans',sans-serif}
 .btn-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
 .hero-stats{
-  display:flex;gap:0;margin-top:3.5rem;
+  display:flex;gap:0;margin-top:1.6rem;
   background:var(--bg);border:1px solid var(--border);border-radius:12px;
   overflow:hidden;box-shadow:var(--shadow);
   opacity:0;animation:fadeUp .8s 1.05s ease forwards;
@@ -196,6 +201,25 @@ a{text-decoration:none;color:inherit}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}55%{transform:translateX(-50%) translateY(8px)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:600px){.hero-stats{display:grid;grid-template-columns:1fr 1fr}.hs{border-right:1px solid var(--border);border-bottom:1px solid var(--border)}}
+
+
+/* ── HERO VISUAL (right side) ── */
+.hero-visual{position:relative;z-index:2;display:flex;flex-direction:column;gap:.8rem;width:100%;align-self:start}
+@media(max-width:960px){.hero-visual{display:none}}
+.hv-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.2rem 1.4rem;box-shadow:var(--shadow-md);width:100%}
+.hv-card-title{font-size:.65rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.hv-card-title::before{content:'';width:16px;height:2px;background:var(--blue);border-radius:2px}
+.hv-metric-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem}
+.hv-metric{background:var(--bg2);border-radius:10px;padding:.9rem 1rem;border:1px solid var(--border)}
+.hv-metric-n{font-family:'Bricolage Grotesque',sans-serif;font-size:1.5rem;font-weight:800;color:var(--blue);line-height:1}
+.hv-metric-l{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:.2rem}
+.hv-skill-list{display:flex;flex-wrap:wrap;gap:.4rem}
+.hv-skill{padding:.25rem .7rem;border-radius:20px;font-size:.68rem;font-weight:700;background:var(--blue-light);border:1px solid var(--blue-mid);color:var(--blue)}
+.hv-exp-row{display:flex;flex-direction:column;gap:.6rem}
+.hv-exp-item{display:flex;align-items:center;gap:.8rem;padding:.6rem .8rem;background:var(--bg2);border-radius:8px;border:1px solid var(--border)}
+.hv-exp-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.hv-exp-text{font-size:.75rem;color:var(--body);font-weight:600;line-height:1.3}
+.hv-exp-year{font-size:.62rem;color:var(--muted);font-weight:600;margin-left:auto;white-space:nowrap}
 
 /* ── SECTION COMMON ── */
 .section{padding:7rem 10%}
@@ -313,9 +337,12 @@ a{text-decoration:none;color:inherit}
 .po-tag::before{content:'';width:14px;height:2px;background:var(--blue);border-radius:2px}
 .po-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;color:var(--navy);line-height:1.1;margin-bottom:1.2rem;letter-spacing:-.02em}
 .po-meta{display:flex;gap:1.2rem;font-size:.7rem;color:var(--muted);padding:.8rem 1rem;background:var(--bg2);border-radius:8px;margin-bottom:2.5rem;flex-wrap:wrap;font-weight:600;border:1px solid var(--border)}
-.post-body h3{font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:800;color:var(--navy);margin:2.5rem 0 .9rem;padding-left:1rem;border-left:3px solid var(--blue)}
-.post-body p{font-size:.97rem;line-height:2;color:var(--body);margin-bottom:1.4rem}
+.post-body h3{font-family:'Bricolage Grotesque',sans-serif;font-size:1.25rem;font-weight:800;color:var(--navy);margin:2rem 0 .75rem;padding-left:1rem;border-left:3px solid var(--blue)}
+.post-body p{font-size:.95rem;line-height:1.85;color:var(--body);margin-bottom:1.1rem}
 .post-body strong{color:var(--navy);font-weight:700}
+.post-body pre{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;font-size:.78rem;overflow-x:auto;margin:1rem 0 1.4rem;line-height:1.6}
+.post-body ul,.post-body ol{margin:.5rem 0 1.1rem 1.5rem;color:var(--body);font-size:.95rem;line-height:1.85}
+.post-body li{margin-bottom:.35rem}
 .post-quote{background:var(--blue-light);border-left:3px solid var(--blue);border-radius:0 10px 10px 0;padding:1.3rem 2rem;margin:2rem 0;font-style:italic;color:var(--navy);font-size:1rem;line-height:1.75}
 .orig-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;padding:.55rem 1.3rem;border-radius:8px;border:2px solid var(--blue);font-size:.78rem;font-weight:700;color:var(--blue);transition:all .2s}
 .orig-link:hover{background:var(--blue);color:#fff}
@@ -353,6 +380,42 @@ a{text-decoration:none;color:inherit}
 .form-ok{display:none;background:var(--green-light);border:1px solid rgba(5,150,105,.3);border-radius:8px;padding:.9rem 1.1rem;color:var(--green);font-size:.86rem;font-weight:700;margin-top:.4rem}
 .form-err{display:none;background:#fff5f5;border:1px solid #fed7d7;border-radius:8px;padding:.9rem 1.1rem;color:#c53030;font-size:.86rem;font-weight:700;margin-top:.4rem}
 
+
+/* ── BOOK SECTION ── */
+.book-wrap{max-width:1100px;margin:0 auto}
+.book-grid{display:grid;grid-template-columns:360px 1fr;gap:2.5rem;align-items:start}
+@media(max-width:900px){.book-grid{grid-template-columns:1fr}}
+.book-cover{position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 40%,#1e293b 100%);aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem;text-align:center;transition:transform .3s,box-shadow .3s}
+.book-cover:hover{transform:translateY(-6px) rotate(0.5deg);box-shadow:0 32px 80px rgba(15,23,42,.25)}
+.book-cover::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(37,99,235,.25),transparent 50%),radial-gradient(circle at 75% 80%,rgba(99,102,241,.2),transparent 50%);pointer-events:none}
+.book-cover-badge{position:relative;z-index:2;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.5);color:#93c5fd;font-size:.62rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;padding:.32rem .9rem;border-radius:20px;margin-bottom:1.8rem}
+.book-cover-icon{font-size:3.5rem;margin-bottom:1.2rem;position:relative;z-index:2}
+.book-cover-title{font-family:'Bricolage Grotesque',sans-serif;font-size:1.55rem;font-weight:800;color:#f1f5f9;line-height:1.15;letter-spacing:-.02em;margin-bottom:.6rem;position:relative;z-index:2}
+.book-cover-sub{font-size:.72rem;color:#94a3b8;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:2rem;position:relative;z-index:2}
+.book-cover-stats{display:flex;gap:1.5rem;position:relative;z-index:2}
+.bcs{text-align:center}
+.bcs-n{font-family:'Bricolage Grotesque',sans-serif;font-size:1.4rem;font-weight:800;color:#60a5fa;line-height:1}
+.bcs-l{font-size:.58rem;color:#64748b;text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-top:.2rem}
+.book-cover-author{position:absolute;bottom:1.8rem;left:0;right:0;text-align:center;z-index:2;font-size:.7rem;color:#475569;font-weight:600;letter-spacing:.06em}
+.book-cover-stripe{position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#2563eb,#6366f1,#8b5cf6)}
+.book-info{display:flex;flex-direction:column;gap:1.5rem}
+.book-chip{display:inline-flex;align-items:center;gap:.45rem;padding:.38rem .9rem;border-radius:999px;background:var(--blue-light);border:1px solid var(--blue-mid);color:var(--blue);font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;width:fit-content}
+.book-title{font-family:'Bricolage Grotesque',sans-serif;font-size:clamp(1.5rem,3vw,2.1rem);font-weight:800;color:var(--navy);line-height:1.1;letter-spacing:-.02em}
+.book-copy{font-size:.96rem;color:var(--body);line-height:1.9}
+.book-toc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.4rem 1.6rem}
+.book-toc-title{font-size:.68rem;text-transform:uppercase;letter-spacing:.18em;color:var(--blue);font-weight:800;margin-bottom:1rem}
+.book-toc-list{display:grid;grid-template-columns:1fr 1fr;gap:.45rem .8rem}
+@media(max-width:560px){.book-toc-list{grid-template-columns:1fr}}
+.book-toc-item{font-size:.8rem;color:var(--body);display:flex;align-items:flex-start;gap:.5rem;line-height:1.4}
+.book-toc-item::before{content:'▸';color:var(--blue);flex-shrink:0;font-size:.7rem;margin-top:.1rem}
+.book-meta-row{display:flex;flex-wrap:wrap;gap:.6rem}
+.book-meta{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .85rem;border-radius:20px;font-size:.72rem;font-weight:700;background:var(--bg);border:1px solid var(--border);color:var(--body);box-shadow:var(--shadow-sm)}
+.book-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:.5rem}
+.btn-book-primary{padding:.85rem 2rem;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .28s;font-family:'Plus Jakarta Sans',sans-serif;box-shadow:0 2px 12px rgba(37,99,235,.3);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+.btn-book-primary:hover{background:#1d4ed8;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.4)}
+.btn-book-outline{padding:.85rem 2rem;background:transparent;color:var(--navy);border:2px solid var(--border2);border-radius:8px;font-size:.88rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .28s;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+.btn-book-outline:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
+
 /* ── FOOTER ── */
 footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;background:var(--navy)}
 .ft-brand{font-family:'Bricolage Grotesque',sans-serif;font-size:.95rem;font-weight:800;color:#fff;letter-spacing:-.01em}
@@ -374,11 +437,12 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
 <nav id="navbar">
   <div class="nav-brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">My <span>Portfolio</span></div>
   <ul class="nav-links">
-    <li><a href="#about" onclick="goTo(event,'about')">About</a></li>
-    <li><a href="#skills" onclick="goTo(event,'skills')">Skills</a></li>
-    <li><a href="#experience" onclick="goTo(event,'experience')">Experience</a></li>
-    <li><a href="#blogs" onclick="goTo(event,'blogs')">Blogs</a></li>
-    <li><a href="#contact" onclick="goTo(event,'contact')">Contact</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'about')">About</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'skills')">Skills</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'experience')">Experience</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'blogs')">Blogs</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'book')">Book</a></li>
+    <li><a href="javascript:void(0)" onclick="goTo(event,'contact')">Contact</a></li>
   </ul>
   <button class="nav-cta" onclick="window.open('https://www.linkedin.com/in/harikumar-r/','_blank')">LinkedIn ↗</button>
   <button class="hamburger" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
@@ -387,11 +451,12 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
 <!-- MOBILE MENU -->
 <div class="mob-menu" id="mobMenu">
   <button class="mob-close" onclick="toggleMob()">✕</button>
-  <a href="#about" onclick="goTo(event,'about');toggleMob()">About</a>
-  <a href="#skills" onclick="goTo(event,'skills');toggleMob()">Skills</a>
-  <a href="#experience" onclick="goTo(event,'experience');toggleMob()">Experience</a>
-  <a href="#blogs" onclick="goTo(event,'blogs');toggleMob()">Blogs</a>
-  <a href="#contact" onclick="goTo(event,'contact');toggleMob()">Contact</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'about');toggleMob()">About</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'skills');toggleMob()">Skills</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'experience');toggleMob()">Experience</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'blogs');toggleMob()">Blogs</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'book');toggleMob()">Book</a>
+  <a href="javascript:void(0)" onclick="goTo(event,'contact');toggleMob()">Contact</a>
 </div>
 
 <!-- HERO -->
@@ -399,22 +464,68 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
   <div class="hero-dots"></div>
   <div class="hero-blob1"></div>
   <div class="hero-blob2"></div>
-  <div class="hero-inner">
-    <div class="hero-badge"><span class="hero-badge-dot"></span>Available for Opportunities</div>
-    <h1 class="hero-name">Harikumar <span class="hi">R</span></h1>
-    <div class="hero-tagline"><span class="typed-text" id="typedEl"></span><span class="cursor-blink">|</span></div>
-    <p class="hero-bio">Senior Business Analyst, Product Owner &amp; Digital Transformation Leader with <strong>16+ years</strong> of global experience across <strong>APAC · Europe · USA</strong>. I translate complex business challenges into elegant, high-impact digital solutions.</p>
-    <div class="hero-btns">
-      <button class="btn-fill" onclick="goTo(null,'experience')">View Experience →</button>
-      <button class="btn-outline" onclick="goTo(null,'contact')">Get In Touch</button>
+
+  <div class="hero-layout">
+
+    <!-- LEFT: Text content -->
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>Available for Opportunities</div>
+      <h1 class="hero-name">Harikumar <span class="hi">R</span></h1>
+      <div class="hero-tagline"><span class="typed-text" id="typedEl"></span><span class="cursor-blink">|</span></div>
+      <p class="hero-bio">Senior Business Analyst, Product Owner &amp; Digital Transformation Leader with <strong>16+ years</strong> of global experience across <strong>APAC · Europe · USA</strong>. I translate complex business challenges into elegant, high-impact digital solutions.</p>
+      <div class="hero-btns">
+        <button class="btn-fill" onclick="goTo(null,'experience')">View Experience →</button>
+        <button class="btn-outline" onclick="goTo(null,'book')">📘 View Book</button>
+        <button class="btn-outline" onclick="goTo(null,'contact')">Get In Touch</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hs"><div class="hs-n">16+</div><div class="hs-l">Years Exp.</div></div>
+        <div class="hs"><div class="hs-n">$190M+</div><div class="hs-l">Revenue Impact</div></div>
+        <div class="hs"><div class="hs-n">13</div><div class="hs-l">APAC Markets</div></div>
+        <div class="hs"><div class="hs-n">8</div><div class="hs-l">Companies</div></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div class="hs"><div class="hs-n">16+</div><div class="hs-l">Years Exp.</div></div>
-      <div class="hs"><div class="hs-n">$190M+</div><div class="hs-l">Revenue Impact</div></div>
-      <div class="hs"><div class="hs-n">13</div><div class="hs-l">APAC Markets</div></div>
-      <div class="hs"><div class="hs-n">8</div><div class="hs-l">Companies</div></div>
+
+    <!-- RIGHT: Info cards -->
+    <div class="hero-visual">
+      <div class="hv-card">
+        <div class="hv-card-title">Career at a Glance</div>
+        <div class="hv-metric-row">
+          <div class="hv-metric"><div class="hv-metric-n">16+</div><div class="hv-metric-l">Years Exp.</div></div>
+          <div class="hv-metric"><div class="hv-metric-n">$190M+</div><div class="hv-metric-l">Revenue Impact</div></div>
+          <div class="hv-metric"><div class="hv-metric-n">13</div><div class="hv-metric-l">APAC Markets</div></div>
+          <div class="hv-metric"><div class="hv-metric-n">8</div><div class="hv-metric-l">Companies</div></div>
+        </div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-card-title">Core Expertise</div>
+        <div class="hv-skill-list">
+          <span class="hv-skill">Product Management</span>
+          <span class="hv-skill">Business Analysis</span>
+          <span class="hv-skill">Agentic AI</span>
+          <span class="hv-skill">Salesforce CRM</span>
+          <span class="hv-skill">SAP ERP</span>
+          <span class="hv-skill">Power BI</span>
+          <span class="hv-skill">Agile / Scrum</span>
+          <span class="hv-skill">Digital Transformation</span>
+          <span class="hv-skill">LangChain</span>
+          <span class="hv-skill">Python</span>
+          <span class="hv-skill">SQL</span>
+          <span class="hv-skill">AWS</span>
+        </div>
+      </div>
+      <div class="hv-card">
+        <div class="hv-card-title">Recent Experience</div>
+        <div class="hv-exp-row">
+          <div class="hv-exp-item"><div class="hv-exp-dot"></div><div class="hv-exp-text">Business &amp; Data Consultant · APAC Client</div><span class="hv-exp-year">2025–Now</span></div>
+          <div class="hv-exp-item"><div class="hv-exp-dot" style="background:#6366f1"></div><div class="hv-exp-text">Product Manager · DKSH Thailand</div><span class="hv-exp-year">2022–2025</span></div>
+          <div class="hv-exp-item"><div class="hv-exp-dot" style="background:var(--green)"></div><div class="hv-exp-text">Sr. Business Analyst · EY GDS LLP</div><span class="hv-exp-year">2021–2022</span></div>
+          <div class="hv-exp-item"><div class="hv-exp-dot"></div><div class="hv-exp-text">Product Owner · UST Inc.</div><span class="hv-exp-year">2015–2021</span></div>
+        </div>
+      </div>
     </div>
-  </div>
+
+  </div><!-- end hero-layout -->
   <div class="hero-scroll"><span>Scroll</span><div class="sc-arr"></div></div>
 </section>
 
@@ -527,13 +638,82 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
     </div>
   </div>
   <div class="bgrid" id="bgrid"></div>
-  <div class="no-posts" id="noPosts">No posts found.</div>
+  <div class="no-posts" id="noPosts">🔍 No posts found.</div>
+</section>
+
+
+<!-- BOOK -->
+<section id="book" class="section section-alt">
+  <div class="book-wrap">
+    <div class="sec-eyebrow reveal">05. Featured Book</div>
+    <h2 class="sec-title reveal">Published <span class="hi">Work</span></h2>
+    <p class="sec-sub reveal">A practitioner's guide to Agentic AI — built from real-world research, frameworks, and production experience across 11 chapters and 120 pages.</p>
+
+    <div class="book-grid">
+
+      <!-- COVER CARD -->
+      <div class="book-cover reveal-l">
+        <div class="book-cover-stripe"></div>
+        <div class="book-cover-badge">📘 Premium Guide · 2026–2027 Edition</div>
+        <div class="book-cover-icon">🤖</div>
+        <div class="book-cover-title">Agentic Artificial Intelligence</div>
+        <div class="book-cover-sub">A Practitioner's Complete Guide</div>
+        <div class="book-cover-stats">
+          <div class="bcs"><div class="bcs-n">120</div><div class="bcs-l">Pages</div></div>
+          <div class="bcs"><div class="bcs-n">11</div><div class="bcs-l">Chapters</div></div>
+          <div class="bcs"><div class="bcs-n">50+</div><div class="bcs-l">Frameworks</div></div>
+        </div>
+        <div class="book-cover-author">Harikumar R · Bangkok, Thailand</div>
+      </div>
+
+      <!-- INFO CARD -->
+      <div class="book-info reveal-r">
+        <div>
+          <div class="book-chip">📘 Premium PDF Guide</div>
+          <div class="book-title" style="margin-top:.8rem">Agentic AI: A Practitioner's Complete Guide</div>
+        </div>
+
+        <p class="book-copy">A comprehensive, production-focused guide covering the full spectrum of Agentic AI — from core concepts and reasoning patterns through multi-agent systems, RAG architecture, safety engineering, and enterprise deployment. Written for Product Managers, AI practitioners, architects, and digital transformation leaders.</p>
+
+        <div class="book-toc">
+          <div class="book-toc-title">What's Inside — 11 Chapters</div>
+          <div class="book-toc-list">
+            <div class="book-toc-item">What Is Agentic AI? Foundations &amp; history</div>
+            <div class="book-toc-item">How Agents Think — ReAct, CoT, planning loops</div>
+            <div class="book-toc-item">The Tools Agents Use — RAG, APIs, search</div>
+            <div class="book-toc-item">Frameworks — LangChain, AutoGen, CrewAI, LangGraph</div>
+            <div class="book-toc-item">Building Your First Agent — Step-by-step</div>
+            <div class="book-toc-item">Multi-Agent Systems &amp; Orchestration</div>
+            <div class="book-toc-item">Memory &amp; Knowledge — Vector DBs &amp; RAG</div>
+            <div class="book-toc-item">Safety, Trust &amp; Ethics — Governance</div>
+            <div class="book-toc-item">Production &amp; Scale — Reliability &amp; cost</div>
+            <div class="book-toc-item">Research Frontiers — Latest papers</div>
+            <div class="book-toc-item">The Future of Agentic AI — 2026–2029</div>
+          </div>
+        </div>
+
+        <div class="book-meta-row">
+          <span class="book-meta">📄 120 Pages</span>
+          <span class="book-meta">🗓 March 2026</span>
+          <span class="book-meta">🌏 English</span>
+          <span class="book-meta">🆓 Free Download</span>
+          <span class="book-meta">🤖 Agentic AI</span>
+        </div>
+
+        <div class="book-actions">
+          <a href="https://drive.google.com/file/d/1ZMcLXcp2DNacIwsul1FgBq1ucgA8qGXy/view?usp=sharing" target="_blank" rel="noopener" class="btn-book-primary">📖 Read Online ↗</a>
+          <a href="https://drive.google.com/uc?export=download&id=1ZMcLXcp2DNacIwsul1FgBq1ucgA8qGXy" target="_blank" rel="noopener" class="btn-book-outline">⬇ Download PDF</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="section section-alt">
   <div style="max-width:1000px;margin:0 auto">
-    <div class="sec-eyebrow reveal">05. Contact</div>
+    <div class="sec-eyebrow reveal">06. Contact</div>
     <h2 class="sec-title reveal">Get In <span class="hi">Touch</span></h2>
   </div>
   <div class="contact-layout">
@@ -553,14 +733,15 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
     </div>
     <form class="cform reveal-r" id="contactForm">
       <div class="form2">
-        <div class="ff"><label class="flbl">Name</label><input class="fin" type="text" placeholder="Your Name" required/></div>
-        <div class="ff"><label class="flbl">Email</label><input class="fin" type="email" placeholder="your@email.com" required/></div>
+        <div class="ff"><label class="flbl">Name</label><input class="fin" type="text" name="name" placeholder="Your Name" required/></div>
+        <div class="ff"><label class="flbl">Email</label><input class="fin" type="email" name="email" placeholder="your@email.com" required/></div>
       </div>
-      <div class="ff"><label class="flbl">Subject</label><input class="fin" type="text" placeholder="Opportunity / Collaboration / Query" required/></div>
-      <div class="ff"><label class="flbl">Message</label><textarea class="fta" placeholder="Share your thoughts or opportunity..." required></textarea></div>
+      <div class="ff"><label class="flbl">Subject</label><input class="fin" type="text" name="subject" placeholder="Opportunity / Collaboration / Query" required/></div>
+      <div class="ff"><label class="flbl">Message</label><textarea class="fta" name="message" placeholder="Share your thoughts or opportunity..." required></textarea></div>
       <button type="submit" class="fsub">Send Message →</button>
       <div class="form-ok" id="formOk">✅ Message sent! I'll get back to you within 24–48 hours.</div>
-      <div class="form-err" id="formErr">❌ Something went wrong. Please email me directly at harione@gmail.com</div>
+      <!-- FIX: corrected email address from harione@gmail.com to harikumar.wins@gmail.com -->
+      <div class="form-err" id="formErr">❌ Something went wrong. Please email me directly at harikumar.wins@gmail.com</div>
     </form>
   </div>
 </section>
@@ -573,6 +754,7 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
     <a onclick="goTo(null,'skills')">Skills</a>
     <a onclick="goTo(null,'experience')">Experience</a>
     <a onclick="goTo(null,'blogs')">Blogs</a>
+    <a onclick="goTo(null,'book')">Book</a>
     <a onclick="goTo(null,'contact')">Contact</a>
   </div>
   <div class="ft-copy">© 2026–27 Harikumar R · Bangkok, Thailand &amp; India</div>
@@ -593,12 +775,482 @@ footer{padding:2.2rem 10%;border-top:1px solid var(--border);display:flex;align-
 </div>
 
 <script>
+/* ── BLOG CONTENT STORE (JS — no HTML rendered) ── */
+var BLOG_CONTENT={
+"agentic-ai-guide":`<h3>From Responding to Pursuing — The Paradigm Shift</h3>
+<p>For most of AI's history the dominant model was simple: give the system an input, receive an output, the exchange ends. <strong>Agentic AI breaks this mould entirely.</strong> An AI agent receives a goal and pursues it — searching the web, writing and executing code, calling APIs, delegating to other agents — across as many steps as the task requires.</p>
+<h3>The Four Defining Properties of a True AI Agent</h3>
+<p><strong>Autonomy</strong> — Operates across multiple steps without human intervention. <strong>Goal-Directedness</strong> — Maintains awareness of an objective persistently. <strong>Tool Use</strong> — Takes real actions: searches, executes code, calls APIs. <strong>Reflection</strong> — Observes results and adjusts. All four are necessary; the combination is what makes agents genuinely capable.</p>
+<h3>The Autonomy Spectrum, 6-Layer Stack, ReAct Loop, Frameworks, Safety, Production</h3>
+<p>Level 1–6 autonomy spectrum: simple chatbot through agent networks. The 6-layer stack spans Infrastructure → Memory → Tools → Model → Orchestration → Application. ReAct loop: Thought → Action → Observation → repeat. Frameworks: LangChain (generalist), LangGraph (stateful), AutoGen (multi-agent dialogue), CrewAI (role-based teams), LlamaIndex (RAG-heavy), DSPy (prompt optimisation). RAG spans 7 levels from naive to graph+vector hybrid. Safety: 8 risk categories, Incremental Trust Model (5 phases). Production: 10 reliability practices, 60–80% cost reduction achievable. ROI: document extraction 300–500% in 3–6 months.</p>
+<div class="post-quote">"The agents we build are mirrors of our intentions, values, and competence. Building well is not just a technical responsibility. It is a human one." — Agentic AI: A Practitioner's Complete Guide, 2026–2027 Edition</div>`,
+"top-ai-tools-pm-2026":`<h3>Why AI Tools Are No Longer Optional for PMs</h3>
+<p>78% of high-performing product teams already use at least one AI-powered tool — a 45% jump from just a few years ago. Generative AI has increased PM productivity by up to 40%, slashing time spent on documentation, feedback synthesis, and sprint admin so PMs can focus on what actually matters: strategy and customers.</p>
+<p>The challenge is no longer "should I use AI?" It is "which tools are worth my time, and where do they actually fit in my workflow?" After deep research into the 2026 PM tool landscape, here is a clear breakdown by use case.</p>
+<h3>1. Documentation and PRD Writing — ChatPRD</h3>
+<p>ChatPRD is the standout tool for PMs who write product requirement documents. Trusted by over 100,000 PMs, it turns rough notes into fully structured PRDs, user stories, and acceptance criteria in minutes — not days. It integrates directly with Notion, Confluence, Linear, Google Docs, and Slack. Its agentic mode proactively flags gaps in your requirements, suggests edge cases you may have missed, and coaches you to write at a senior PM level.</p>
+<h3>2. Feedback Synthesis — Productboard AI</h3>
+<p>Productboard has long been the gold standard for customer feedback management. Its 2026 AI layer automatically categorizes and links user insights to related features — even when customers describe the same problem in completely different words. Trend monitoring surfaces emerging user needs before they become urgent.</p>
+<h3>3. Sprint Management — Jira AI (Rovo)</h3>
+<p>Jira's Rovo AI lets you ask questions in plain English: "Which stories have been open for more than two sprints?" It answers instantly with charts, summaries, and actionable recommendations, replacing the need for complex JQL queries.</p>
+<h3>4. Analytics — Amplitude AI</h3>
+<p>Amplitude's "Ask Amplitude" feature is transformative for PMs who are not SQL experts. You type a natural language question and Amplitude translates it into the correct query, returns a chart, and adds an explanation. What used to require a data analyst and a 2-day turnaround now happens in 30 seconds.</p>
+<h3>5. User Research — Otter.ai and Dovetail</h3>
+<p>Otter.ai provides real-time transcription with 95%+ accuracy, auto-generates meeting summaries, captures action items, and syncs directly to Notion, Jira, and Asana. Dovetail organizes interview recordings, identifies recurring themes across sessions, and surfaces patterns you might miss when reviewing interviews one at a time.</p>
+<div class="post-quote">"AI will significantly increase demand for people who can come up with clear specs for valuable things to build. AI co-pilots don't replace creativity — they supercharge it." — Andrew Ng</div>`,
+"chatprd-vs-productboard-vs-jira-ai":`<h3>The 2026 PM Tool Problem: Too Many Options, Not Enough Clarity</h3>
+<p>Walk into any product team in 2026 and you will find PMs juggling an average of 5–7 tools. AI features are now being bolted onto everything — which means choosing the right tool requires more discernment than ever, not less. Three tools consistently top the conversations: ChatPRD (documentation), Productboard (feedback and roadmapping), and Jira AI / Rovo (sprint and backlog management).</p>
+<h3>ChatPRD — The Documentation Specialist</h3>
+<p><strong>What it does well:</strong> ChatPRD turns rough product ideas into polished PRDs, user stories, and acceptance criteria in minutes. Its AI understands product strategy, not just writing — it actively coaches you to strengthen narratives, fill requirement gaps, and think through edge cases. With 100,000+ PMs using it, it is the most widely adopted AI documentation tool on the market. <strong>Where it falls short:</strong> ChatPRD is narrowly focused on documentation. It does not aggregate customer feedback, track sprint progress, or provide behavioral analytics.</p>
+<h3>Productboard — The Feedback and Roadmap Platform</h3>
+<p><strong>What it does well:</strong> Productboard is the most mature tool for closing the loop between customer feedback and product decisions. Its OpenAI-powered layer automatically categorizes feedback from emails, support tickets, Zendesk, Slack, and surveys — linking insights to features even when customers describe the same issue in different ways. <strong>Where it falls short:</strong> Enterprise pricing can reach $300–400 per maker monthly for large teams.</p>
+<h3>Jira AI (Rovo) — The Sprint Intelligence Engine</h3>
+<p><strong>What it does well:</strong> For the 65%+ of product teams already inside the Atlassian ecosystem, Jira's Rovo AI is the lowest-friction AI upgrade available. Natural language queries replace complex JQL — ask "Which epics are at risk this quarter?" and get an instant, structured answer. <strong>Where it falls short:</strong> Rovo is strongest inside the Atlassian world. If your team uses Linear, Notion, or other tools as primary surfaces, its value diminishes.</p>
+<h3>Side-by-Side Summary</h3>
+<p>Writing requirements and documentation → ChatPRD. Processing customer feedback and building a customer-centric roadmap → Productboard. Sprint visibility and backlog intelligence inside Jira → Jira AI / Rovo.</p>
+<div class="post-quote">"The best product managers in 2026 won't be those who avoid AI, but those who leverage it to spend more time with customers and less time on administrative work." — Marty Cagan, SVPG</div>`,
+"ai-pm-stack-guide-2026":`<h3>The Problem with Most PM Tool Stacks</h3>
+<p>The average product team runs 5–7 separate tools for roadmapping, analytics, feedback, documentation, sprint management, and communication. Each tool was added to solve a real problem. But over time, the combined weight of context-switching, data inconsistency, and integration maintenance creates a new problem bigger than the ones being solved.</p>
+<h3>Step 1 — Audit Where Your Time Actually Goes</h3>
+<p>Before choosing any tool, spend one week tracking where your hours go. Most PMs are surprised: the typical breakdown is 30–40% documentation and writing, 20–25% meetings and note-taking, 15–20% feedback synthesis and prioritization, and 10–15% reporting and stakeholder updates. Less than 20% is deep strategic thinking — the part AI should be protecting, not replacing.</p>
+<h3>Step 2 — Build Around Four Core Layers</h3>
+<p>A lean 2026 AI PM stack covers four layers — one primary tool per layer: Layer 1 — Research and Discovery (Perplexity AI), Layer 2 — Documentation and Requirements (ChatPRD + Notion AI), Layer 3 — Feedback and Prioritization (Productboard AI), Layer 4 — Analytics and Delivery (Amplitude AI + Jira AI).</p>
+<h3>Step 3 — Prioritize Integration Over Features</h3>
+<p>The most common mistake when building a PM stack is optimising for individual tool features rather than how tools connect to each other. A tool that is 80% as capable but integrates seamlessly with your existing stack beats a best-in-class tool that creates a data silo every time.</p>
+<h3>Step 4 — Apply the Privacy Rule</h3>
+<p>Many AI tools train on the data you input. For sensitive product strategy, competitive intelligence, and anything involving personal user data, use enterprise versions with data isolation guarantees. The practical rule: public-facing information can go through standard AI tools. Product strategy and user data require enterprise agreements or local AI.</p>
+<h3>Step 5 — Commit to One Tool at a Time</h3>
+<p>The fastest way to get no value from AI tools is to adopt five simultaneously. Instead, commit to one tool for 30 days. Measure time saved. Document the workflow changes. Then add the next one. Teams that follow this adoption pattern report consistent time savings of 50–60% on administrative work.</p>
+<div class="post-quote">"The best stacks in 2026 will look boring. A small number of tools used consistently, with clear purpose and limits."</div>`,
+"future-pm":`<h3>Introduction: The PM Role Is Evolving—Fast</h3>
+<p>The world of product management is changing rapidly. By upcoming years, the role of the Product Manager will be shaped by advances in Artificial Intelligence (AI), shifts in user experience (UX) expectations, and broader ethical challenges. In this article, we'll explore what the future holds for PMs and how you can prepare to thrive in the next decade.</p>
+<h3>1. AI as Both a Tool and a Product Feature</h3>
+<p>Artificial Intelligence will revolutionize how PMs work and what products can do. Beyond AI-powered features inside products (like recommendation engines or chatbots), AI will become a critical PM tool. Imagine AI helping you analyze user feedback instantly, prioritize backlogs with predictive accuracy, or even generate prototype ideas based on market trends. PMs who learn to leverage AI tools will make faster, data-driven decisions and uncover insights invisible to humans alone.</p>
+<h3>2. UX Will Be More Intuitive, Personalized, and Essential</h3>
+<p>Users expect seamless, intuitive experiences. Personalization powered by AI and machine learning will make products feel like they were built just for you. PMs will need to work closely with UX designers and researchers to create these tailored experiences. The focus will shift from just functionality to emotional connection and delight. PMs will balance data insights with empathy to design products that resonate deeply with diverse user groups.</p>
+<h3>3. Data Literacy Will Be a Core PM Skill</h3>
+<p>In the future, understanding data won't be optional — it will be foundational. PMs will need to dive deep into behavioral analytics, predictive modeling, and user segmentation. This will enable more precise product roadmaps and better validation of ideas before costly development begins. PMs will partner closely with data scientists and analysts but must also speak the language of data fluently themselves.</p>
+<h3>4. Ethical Judgment and Purpose-Driven Products Will Rise</h3>
+<p>As technology's impact grows, so do the responsibilities. Privacy concerns, bias in AI, inclusivity, and long-term societal effects will become front and center for PMs. The PM of 2030 must balance innovation with ethics — building products that do good, protect users, and foster trust. Purpose-driven product management will differentiate leaders in the marketplace.</p>
+<h3>5. Continuous Learning and Adaptability Are Non-Negotiable</h3>
+<p>The pace of change will only accelerate. PMs must cultivate adaptability, embrace lifelong learning, and stay curious about emerging tech and trends. Those who can quickly pivot strategies, adopt new tools, and lead cross-functional teams through uncertainty will thrive.</p>
+<div class="post-quote">"Despite all the changes, the heart of product management stays the same: building products that solve meaningful problems and create value for users and businesses."</div>`,
+"customer-centric":`<h3>Building a Customer-Centric Product</h3>
+<p>Data-driven decision-making is the cornerstone of modern product management. But with a flood of available metrics, knowing which KPIs truly matter can be overwhelming. Effective PMs focus on a carefully selected set of indicators aligned with their product's goals, business model, and growth stage. These metrics provide insight into product health, user behavior, and financial viability — helping PMs prioritize initiatives and prove impact.</p>
+<p>User engagement metrics form the foundation of product health assessment. For consumer apps or SaaS platforms, tracking Daily Active Users (DAU), Monthly Active Users (MAU), session duration, and feature usage reveals how often and how deeply customers interact with the product. High engagement often signals strong product-market fit. For example, if an e-commerce app sees rising session lengths and repeat visits, it's a sign users find value beyond initial purchases.</p>
+<p>Churn rate — the percentage of users who stop using the product over time — is vital for subscription-based or recurring revenue products. High churn may indicate onboarding issues, poor product fit, or competitive pressure. Pairing churn analysis with cohort analysis (tracking specific groups over time) helps pinpoint when and why users leave. For example, if a cohort of users drops off after the first week, the onboarding process may need improvement.</p>
+<p>Financial metrics like Customer Lifetime Value (CLV) and Customer Acquisition Cost (CAC) are critical for understanding growth efficiency. CLV estimates total revenue from a user, while CAC measures the cost to acquire them. A sustainable business typically maintains a healthy ratio between CLV and CAC, ensuring marketing and sales investments pay off. Monitoring these metrics helps PMs justify budgets and prioritize features that improve retention and upsell.</p>
+<p>Conversion rates through the funnel — from visitor to signup, free trial to paid user, or basic to premium feature adoption — highlight friction points that need optimization. A/B testing different onboarding flows or pricing pages can help improve conversions. For example, a SaaS company might test two signup processes to see which reduces drop-off and increases trial-to-paid conversion.</p>
+<p>Consistently tracking and interpreting these KPIs, combined with qualitative insights, empowers PMs to make informed decisions that maximize impact, reduce churn, and drive revenue growth.</p>`,
+"kpis-pm":`<h3>Key KPIs Every Product Manager Should Track</h3>
+<p>Data-driven decision-making is the cornerstone of modern product management. But with a flood of available metrics, knowing which KPIs truly matter can be overwhelming. Effective PMs focus on a carefully selected set of indicators aligned with their product's goals, business model, and growth stage. These metrics provide insight into product health, user behavior, and financial viability — helping PMs prioritize initiatives and prove impact.</p>
+<p>User engagement metrics form the foundation of product health assessment. For consumer apps or SaaS platforms, tracking Daily Active Users (DAU), Monthly Active Users (MAU), session duration, and feature usage reveals how often and how deeply customers interact with the product. High engagement often signals strong product-market fit. For example, if an e-commerce app sees rising session lengths and repeat visits, it's a sign users find value beyond initial purchases.</p>
+<p>Churn rate — the percentage of users who stop using the product over time — is vital for subscription-based or recurring revenue products. High churn may indicate onboarding issues, poor product fit, or competitive pressure. Pairing churn analysis with cohort analysis helps pinpoint when and why users leave.</p>
+<p>Financial metrics like Customer Lifetime Value (CLV) and Customer Acquisition Cost (CAC) are critical for understanding growth efficiency. CLV estimates total revenue from a user, while CAC measures the cost to acquire them. A sustainable business typically maintains a healthy ratio between CLV and CAC, ensuring marketing and sales investments pay off.</p>
+<p>Conversion rates through the funnel — from visitor to signup, free trial to paid user, or basic to premium feature adoption — highlight friction points that need optimization. A/B testing different onboarding flows or pricing pages can help improve conversions.</p>
+<p>Consistently tracking and interpreting these KPIs, combined with qualitative insights, empowers PMs to make informed decisions that maximize impact, reduce churn, and drive revenue growth.</p>`,
+"conflicting-priorities":`<h3>The Art of Stakeholder Management: How PMs Balance Conflicting Priorities</h3>
+<p>Product managers frequently find themselves managing a wide array of stakeholders, each with their own priorities, goals, and perspectives. For instance, executives may be focused on aggressive revenue targets or market expansion, sales teams might push for features that close deals faster, engineering could prioritize system stability and technical debt reduction, while customer support looks for tools to reduce user friction. The PM's challenge is to understand these diverse perspectives and align them towards a common goal without compromising the product's core vision or timeline. This balancing act requires diplomacy, strategic thinking, and strong interpersonal skills.</p>
+<p>Effective stakeholder management begins with transparent and continuous communication. Setting clear expectations early on helps prevent misalignment. For example, a PM might hold regular check-ins and status updates to share progress, risks, and trade-offs. Using visual tools like roadmaps or dashboards keeps everyone informed and reduces surprises. When changes occur — like shifting priorities or delayed features — proactively communicating these decisions helps maintain trust and cooperation.</p>
+<p>Prioritization frameworks such as RICE (Reach, Impact, Confidence, Effort), MoSCoW (Must-have, Should-have, Could-have, Won't-have), or the Kano Model help PMs make data-informed trade-offs when deciding which features or fixes to focus on. By quantifying the value and cost of requests, PMs move conversations from subjective opinions to objective discussions grounded in business impact. For example, if sales requests a flashy feature but user data shows minimal impact on retention, the PM can clearly explain why the feature isn't prioritized now.</p>
+<p>Empathy and active listening are also crucial. By understanding the root concerns behind stakeholder demands, PMs can often find creative compromises that address the underlying needs without overloading the team. For instance, promising to revisit a lower-priority feature in a future release or suggesting simpler interim solutions shows respect for stakeholder input while protecting the product's focus.</p>
+<p>Ultimately, the art of stakeholder management lies in balancing influence without formal authority, negotiating win-win outcomes, and leading diverse groups toward a shared product vision. Mastering this skill helps PMs navigate complex organizational dynamics and deliver successful products on time.</p>`,
+"mongodb-pm":`<h3>Why Should Product Managers Care About MongoDB?</h3>
+<p>As a Product Manager, understanding the technologies behind your product helps you make better decisions, communicate effectively with engineering, and prioritize features realistically. MongoDB is one of the most popular modern databases powering many scalable and flexible products today. Knowing its basics helps you grasp how your product stores and handles data, which can influence product design, user experience, and scalability.</p>
+<h3>What Makes MongoDB Different?</h3>
+<p>Traditional databases organize data in fixed tables with rows and columns — great when your data structure rarely changes. But many modern apps need to handle varied or evolving data. MongoDB stores data as flexible "documents" (think of them as digital records) in collections, which means the structure can easily adapt as your product grows or pivots. For example, if your product team decides to add new user profile fields or experiment with different data types (like images, social profiles, or preferences), MongoDB makes it easier without complex migrations or downtime.</p>
+<h3>How Does This Impact Product Decisions?</h3>
+<p><strong>Faster Iterations:</strong> Since MongoDB doesn't require rigid schemas, your engineers can quickly add or change features without waiting for long database restructuring. This means you can test new ideas faster and respond to user feedback more agilely. <strong>Handling Complex Data:</strong> If your product deals with rich content — like user-generated data, product catalogs with varying attributes, or real-time analytics — MongoDB's document model is designed to handle this complexity naturally. <strong>Scalability:</strong> As your user base grows, MongoDB's ability to scale horizontally means your product can handle more data and traffic without sacrificing performance. This is critical when planning growth strategies or feature rollouts.</p>
+<h3>What PMs Should Discuss with Developers Regarding MongoDB</h3>
+<p><strong>Data Model Flexibility:</strong> Ask how the team leverages MongoDB's flexible schema to support upcoming features or changes in data requirements. <strong>Performance Implications:</strong> Understand how data storage choices might affect loading times, search capabilities, or offline access. <strong>Backup and Security:</strong> Make sure there's a plan to protect user data and comply with regulations.</p>
+<h3>Summary</h3>
+<p>As a Product Manager, knowing MongoDB basics equips you to: better align product roadmap with technical possibilities, communicate clearly with engineering on data-related trade-offs, anticipate how your product's data needs might evolve, and ensure your product can scale and adapt to user demands smoothly. MongoDB is more than just a database — it's a tool that enables product agility and innovation.</p>`,
+"types-pm":`<h3>Different Types of Product Managers</h3>
+<h3>1. Technical Product Manager (Technical PM)</h3>
+<p>These PMs have a strong technical background — often engineers themselves — and focus heavily on the technology behind the product. They work closely with development teams to define detailed requirements, APIs, integrations, and complex technical challenges. <em>When you'd find them:</em> In tech-heavy companies, SaaS products, platforms, or developer tools.</p>
+<h3>2. Growth Product Manager</h3>
+<p>Growth PMs specialize in user acquisition, activation, retention, and monetization. They focus on metrics like conversion rates, churn, and lifetime value. Their work involves running experiments, A/B testing, and data analysis to optimize the product for growth. <em>When you'd find them:</em> Consumer apps, marketplaces, subscription services, or any product needing rapid user base expansion.</p>
+<h3>3. Product Marketing Manager (PMM)</h3>
+<p>Though technically part of marketing, PMMs sit at the intersection of product and marketing. They focus on positioning, messaging, go-to-market strategies, and customer insights to drive demand and adoption. <em>When you'd find them:</em> In companies with mature products looking to scale or reposition, or launching new features.</p>
+<h3>4. Platform Product Manager</h3>
+<p>Platform PMs manage foundational products or services used by other products or teams inside a company. They focus on building APIs, SDKs, developer tools, or internal platforms. <em>When you'd find them:</em> Large tech companies with multiple products or services, cloud providers, or infrastructure teams.</p>
+<h3>5. Data Product Manager</h3>
+<p>Data PMs manage products or features related to data collection, analytics, and insights. They often work closely with data scientists and engineers to build dashboards, reporting tools, or machine learning models. <em>When you'd find them:</em> Companies focused on big data, AI, or products driven by user analytics.</p>
+<h3>6. Consumer Product Manager</h3>
+<p>These PMs focus on consumer-facing products — apps, websites, or devices aimed at general users. Their focus is on user experience, engagement, and features that appeal to broad audiences. <em>When you'd find them:</em> Social media apps, e-commerce, mobile apps, or consumer electronics.</p>
+<h3>7. Enterprise Product Manager</h3>
+<p>Enterprise PMs build products for businesses rather than consumers. Their work involves understanding complex workflows, compliance needs, integration with existing enterprise software, and longer sales cycles. <em>When you'd find them:</em> SaaS platforms for businesses, B2B software, or specialized industry tools.</p>
+<h3>8. Innovation or New Product Development (NPD) Manager</h3>
+<p>Focused on creating new products or exploring emerging markets, these PMs work on innovation, prototypes, and experimental features. They often lead cross-functional teams to validate ideas quickly. <em>When you'd find them:</em> Startups, R&amp;D departments, or companies launching new ventures.</p>
+<h3>9. Hardware Product Manager</h3>
+<p>PMs who specialize in physical products, working on everything from design, manufacturing, supply chain, and firmware integration. <em>When you'd find them:</em> IoT devices, consumer electronics, automotive, or any company building physical products.</p>
+<h3>Summary</h3>
+<p>Product management isn't one-size-fits-all. Different types of PMs bring different skills and focus areas depending on the product, industry, and company stage. As a PM or aspiring PM, understanding these types helps you identify where you might fit best or which skills to develop next.</p>`,
+"pm-gtm":`<h3>Roles of a Product Manager in Launch and Go-to-Market (GTM)</h3>
+<h3>1. Coordinating Cross-Functional Teams</h3>
+<p>The PM acts as the central hub connecting engineering, marketing, sales, customer support, and operations teams. They ensure everyone understands the product features, launch timeline, and their responsibilities to make the launch smooth.</p>
+<h3>2. Finalizing the Product and Features</h3>
+<p>Before launch, PMs confirm that all features meet quality standards, have passed testing, and fulfill the original goals. They also prioritize any last-minute bug fixes or minor enhancements.</p>
+<h3>3. Creating the Go-to-Market Strategy</h3>
+<p>PMs work with marketing and sales to craft positioning, messaging, and target audience definitions. They help shape sales enablement materials, demos, and FAQs to prepare teams for customer interactions.</p>
+<h3>4. Training and Enablement</h3>
+<p>PMs often facilitate training sessions or workshops to educate sales and support teams about the product's value proposition, new workflows, and potential customer questions.</p>
+<h3>5. Launch Execution and Monitoring</h3>
+<p>During the launch, PMs monitor key metrics such as adoption rates, user engagement, and system performance. They coordinate quick responses to any issues, working with support and engineering for rapid fixes.</p>
+<h3>6. Gathering Feedback and Planning Next Steps</h3>
+<p>Post-launch, PMs collect customer and internal feedback to identify improvement areas. This feedback informs roadmap adjustments and future releases.</p>
+<h3>General Experience of an HR Product Rollout: A PM's Perspective</h3>
+<p><strong>Pre-Launch:</strong> User Research (PM works with HR stakeholders to understand pain points), Feature Definition (digital forms, automated reminders, dashboard reporting), and Pilot Testing with a small internal team. <strong>Launch Phase:</strong> Cross-Team Coordination, Training for HR staff and managers, and Soft Launch with one department to mitigate risk. <strong>Post-Launch:</strong> PM tracks adoption rates, monitors technical issues, and iterates based on feedback — improving mobile access and integration with payroll systems. A successful rollout improves onboarding efficiency, reduces paperwork, and enhances employee satisfaction.</p>`,
+"idea-to-product":`<h3>1. Idea Generation and Collection</h3>
+<p>Everything starts with an idea, but good ideas don't just appear out of thin air — they come from a mix of customer feedback, market research, competitor analysis, and team brainstorming. Create a system to capture ideas from all sources — whether it's a shared backlog, idea board, or suggestion portal. Encourage your team and users to contribute ideas freely, but don't rush to develop every one. The goal here is to have a rich pool of ideas.</p>
+<h3>2. Validation and Prioritization</h3>
+<p>Not every idea is worth building. This stage is about validating which ideas solve real user problems and align with business goals. Conduct quick user interviews or surveys to understand the pain points. Use data analytics to see if there's demand or a trend supporting the idea. Apply prioritization frameworks like RICE (Reach, Impact, Confidence, Effort) or MoSCoW to objectively evaluate ideas. Focus on ideas that provide the highest value with manageable effort.</p>
+<h3>3. Define the Product Vision and Strategy</h3>
+<p>Once you've identified promising ideas, craft a clear product vision that communicates the "why" behind building this product. Define strategic goals, target users, and key success metrics. This vision will guide development and keep stakeholders aligned. Share it widely to get buy-in from your team, leadership, and other departments.</p>
+<h3>4. Planning and Roadmapping</h3>
+<p>Translate your vision into actionable plans: Break down the product into features or MVP scope. Create a product roadmap that sequences these features over time, balancing quick wins and strategic bets. Collaborate with engineering, design, marketing, and operations to align on timelines and dependencies. Use tools like Jira, Trello, or Productboard to visualize and track progress.</p>
+<h3>5. Development, Testing, and Iteration</h3>
+<p>During development, maintain close collaboration between teams. Use Agile methodologies to build iteratively, allowing for feedback and course correction. Write clear user stories and acceptance criteria. Run regular demos and gather internal feedback. Conduct beta tests or pilot launches to collect user feedback before full rollout. Iterate quickly based on real-world usage to improve the product continuously.</p>
+<h3>6. Launch and Go-to-Market</h3>
+<p>Coordinate with marketing, sales, and customer support to ensure a smooth launch. Prepare go-to-market plans including messaging, positioning, and training. Monitor launch metrics closely to identify issues or unexpected behavior. Have support teams ready to handle questions or problems from users.</p>
+<h3>7. Post-Launch Review and Continuous Improvement</h3>
+<p>After launch, analyze performance against your success metrics. Collect customer feedback and usage data. Conduct retrospectives with your team to discuss what worked and what didn't. Plan follow-up releases to address gaps and add value. Treat product strategy as a continuous cycle, not a one-time event.</p>`,
+"break-into-pm":`<h3>How to Break Into Product Management (No Tech Background Needed!)</h3>
+<p>If you've ever wondered how people without coding or engineering backgrounds become successful Product Managers (PMs), you're not alone. Product Management is one of the fastest-growing and most impactful roles in tech, but it's often misunderstood as being exclusive to those with technical degrees or software experience. In reality, some of the best PMs started their careers in marketing, customer service, operations, journalism — even teaching. If you're a strong communicator, problem solver, and critical thinker, breaking into product management is absolutely within reach.</p>
+<h3>1. Learn the Language of Product</h3>
+<p>Even if you don't have a tech background, you can learn how the product world works. Start with the fundamentals: Understand product lifecycles (how ideas go from concept to launch), explore Agile methodologies (sprints, backlogs, epics, and user stories), and study popular PM frameworks (RICE, MoSCoW, Jobs to Be Done). Free resources like Medium articles, podcasts (Lenny's Podcast or Masters of Scale), and YouTube channels can be immensely helpful. Consider affordable online courses from Coursera, Product School, or Reforge.</p>
+<h3>2. Translate Your Experience Into Product Skills</h3>
+<p>You don't need the title "Product Manager" to show product skills. Have you ever led a cross-functional project? Worked directly with customers and implemented feedback? Created a report that influenced business decisions? Improved a workflow or tool in your team? If so, you've already practiced core PM skills like collaboration, user empathy, and decision-making. Reframe your experience in PM language on your resume.</p>
+<h3>3. Build a Portfolio (Even Without a Job)</h3>
+<p>Demonstrating initiative is powerful. Create a portfolio that includes: a mock product case study or product teardown, a sample product roadmap or PRD (Product Requirements Document), and a problem-solution analysis based on user research. You can use tools like Notion, Figma, or even Google Docs to present your work. Recruiters and hiring managers love seeing candidates who go above and beyond to prove their passion and thinking process.</p>
+<h3>4. Network Like It's Your Job (Because It Kind of Is)</h3>
+<p>Breaking into PM is often about who you know, not just what you know. Join PM communities (Slack groups like Product Collective, Mind the Product, or Women in Product), attend events (product meetups, webinars, and panels), and reach out directly to PMs on LinkedIn asking for advice or a quick call. Most PMs are happy to help someone starting out. Don't be afraid to ask, and always follow up with gratitude. Mentorship can be a game-changer.</p>
+<h3>5. Start Small and Stay Patient</h3>
+<p>You don't need to land a senior PM role immediately. Look for stepping-stone positions: Associate Product Manager (APM), Product Analyst, Business Analyst, Customer Success or UX Research roles. These can lead to internal promotions or give you the credibility to apply externally.</p>
+<p>Product Management thrives on diversity of thought. Whether you come from teaching, finance, design, or customer support, your background gives you a unique lens to understand users and build better products. With curiosity, continuous learning, and strategic networking, you can break into product management — no computer science degree required. It's not about where you start; it's about how relentlessly you pursue growth.</p>`,
+"working-devs":`<h3>Working with Developers: What Every PM Should Know</h3>
+<p>As a Product Manager (PM), your relationship with developers is critical. They're the ones who turn your product vision into reality, writing the code that powers every feature. Building a respectful, collaborative, and clear relationship with developers ensures smoother development cycles and better products.</p>
+<h3>1. Use Prioritization Frameworks to Guide Decisions</h3>
+<p>Prioritizing features based on gut feeling or politics is a recipe for chaos. The best PMs rely on frameworks that objectively evaluate features: RICE (Reach, Impact, Confidence, Effort), MoSCoW (Must-have, Should-have, Could-have, Won't-have), and the Kano Model (differentiates between features that delight users versus those they simply expect). Using these tools helps teams stay focused on what will drive the most value, rather than what's loudest in the room.</p>
+<h3>2. Communicate Prioritization Decisions Transparently</h3>
+<p>Saying no isn't about shutting down ideas — it's about explaining why some things come first. Great PMs communicate decisions clearly with all stakeholders, sharing the rationale behind prioritization. For example, instead of saying, "We're not doing that feature," say, "We're focusing on X right now because it impacts 70% of our users and aligns with our strategic goal of increasing retention." This transparency builds trust and reduces frustration, helping stakeholders feel heard even when their requests aren't immediately prioritized.</p>
+<h3>3. Keep a Living Backlog for Future Ideas</h3>
+<p>Rejecting a feature outright can cause resentment. Instead, maintain a well-organized backlog where all ideas — even those not prioritized now — are documented and revisited regularly. This shows stakeholders that their ideas are valued and might be considered in the future.</p>
+<h3>4. Balance Short-Term Wins with Long-Term Vision</h3>
+<p>Great prioritization isn't just about quick wins. PMs must balance features that solve immediate user pain with investments that build long-term competitive advantage. This might mean saying no to flashy features that don't align with your roadmap or mission. It requires discipline and a deep understanding of business goals.</p>
+<h3>5. Master the Art of Saying No with Empathy</h3>
+<p>Saying no can feel uncomfortable, but it's part of the job. Great PMs deliver the message with empathy — acknowledging the effort and passion behind each request while steering conversations back to strategic priorities. Use phrases like: "That's a great idea, and here's how it fits into our bigger picture..." or "We're focusing our resources on X right now, but we'll keep this in mind for future releases."</p>
+<p>The ability to say no — thoughtfully, clearly, and confidently — is what enables Product Managers to build focused, valuable products. Remember: every "no" is an opportunity to say "yes" to something more important.</p>`,
+"pm-priority":`<h3>How Great PMs Prioritize Features (And Say No with Grace)</h3>
+<p>One of the most challenging and crucial responsibilities of a Product Manager (PM) is deciding what not to build. Every day, PMs face an avalanche of feature requests — from customers, sales teams, executives, and partners. Saying "yes" to everything leads to bloated products, missed deadlines, and frustrated teams. Great PMs prioritize ruthlessly and learn to say no gracefully. This skill is what separates reactive managers from strategic leaders.</p>
+<h3>1. Use Prioritization Frameworks to Guide Decisions</h3>
+<p>Prioritizing features based on gut feeling or politics is a recipe for chaos. The best PMs rely on frameworks that objectively evaluate features: RICE (Reach, Impact, Confidence, Effort) scores ideas based on how many users it affects, the value it delivers, confidence in the data, and the development effort required. MoSCoW (Must-have, Should-have, Could-have, Won't-have) categorizes features by priority level. The Kano Model differentiates between features that delight users versus those they simply expect. Using these tools helps teams stay focused on what will drive the most value, rather than what's loudest in the room.</p>
+<h3>2. Communicate Prioritization Decisions Transparently</h3>
+<p>Saying no isn't about shutting down ideas — it's about explaining why some things come first. Great PMs communicate decisions clearly with all stakeholders, sharing the rationale behind prioritization. For example, instead of saying, "We're not doing that feature," say, "We're focusing on X right now because it impacts 70% of our users and aligns with our strategic goal of increasing retention." This transparency builds trust and reduces frustration, helping stakeholders feel heard even when their requests aren't immediately prioritized.</p>
+<h3>3. Keep a Living Backlog for Future Ideas</h3>
+<p>Rejecting a feature outright can cause resentment. Instead, maintain a well-organized backlog where all ideas — even those not prioritized now — are documented and revisited regularly. This shows stakeholders that their ideas are valued and might be considered in the future. It also helps PMs make data-driven decisions as priorities shift over time.</p>
+<h3>4. Balance Short-Term Wins with Long-Term Vision</h3>
+<p>Great prioritization isn't just about quick wins. PMs must balance features that solve immediate user pain with investments that build long-term competitive advantage. This might mean saying no to flashy features that don't align with your roadmap or mission. It requires discipline and a deep understanding of business goals.</p>
+<h3>5. Master the Art of Saying No with Empathy</h3>
+<p>Saying no can feel uncomfortable, but it's part of the job. Great PMs deliver the message with empathy — acknowledging the effort and passion behind each request while steering conversations back to strategic priorities. This approach keeps relationships positive and maintains momentum.</p>
+<p>The ability to say no — thoughtfully, clearly, and confidently — is what enables Product Managers to build focused, valuable products. Prioritization frameworks, transparent communication, and empathy form the foundation of this skill. Remember: every "no" is an opportunity to say "yes" to something more important. Master this, and you'll not only lead better products — you'll lead better teams.</p>`,
+"pm-tools":`<h3>Introduction: Tools Don't Make the PM — But They Sure Help</h3>
+<p>Product Managers (PMs) wear many hats. On any given day, you might be reviewing customer feedback, aligning stakeholders, writing user stories, or analyzing data. While your soft skills are what truly drive success, the right product management tools make those tasks smoother, faster, and more effective. In this blog, we'll break down the essential categories of PM tools — roadmapping, design, development tracking, user insights, and documentation — and offer real-world suggestions you can start using today.</p>
+<h3>1. Roadmapping and Planning: Setting Direction with Clarity</h3>
+<p>Every product needs a roadmap. It communicates what you're building, when, and why. It helps align teams and stakeholders around shared priorities. Top tools: <strong>Aha!</strong> — Great for strategic planning, product hierarchy, and timelines. Ideal for enterprises. <strong>Productboard</strong> — Combines user feedback with feature prioritization. Excellent for customer-focused teams. <strong>Trello or Notion</strong> — Lightweight, visual tools for small teams or early-stage startups. PM Tip: Your roadmap isn't just a list of features — it's a narrative. Tools like these help visualize trade-offs and make that narrative visible to everyone.</p>
+<h3>2. Design Collaboration: Bridging the Gap Between PMs and Designers</h3>
+<p>PMs aren't usually the ones designing interfaces, but you'll work closely with UX/UI teams. Design collaboration tools allow you to understand, give feedback on, and test product flows before a single line of code is written. Top tools: <strong>Figma</strong> — The go-to tool for collaborative design. Easy for PMs to comment, prototype, and explore layouts. <strong>Sketch</strong> — Preferred by some design teams, especially in Apple ecosystems. <strong>InVision</strong> — Great for clickable prototypes and early user testing. PM Tip: Ask your designer to walk you through user flows in Figma.</p>
+<h3>3. Development and Task Management: Staying Agile</h3>
+<p>Keeping development on track is critical. Top tools: <strong>Jira</strong> — The gold standard for Agile development. Great for managing epics, stories, and sprint boards. <strong>ClickUp</strong> — Combines project and task management. More flexible and visual than Jira. <strong>Linear</strong> — Lightweight, fast, and loved by many startups for its clean interface. PM Tip: Learn to write excellent user stories and acceptance criteria. Even the best tools can't save unclear requirements.</p>
+<h3>4. User Insights and Analytics: Let Data Drive Your Decisions</h3>
+<p>PMs must know what users are doing — and why. Top tools: <strong>Google Analytics</strong> — Excellent for understanding traffic, user paths, and conversions. <strong>Mixpanel</strong> — Event-based analytics perfect for SaaS and mobile products. <strong>Hotjar</strong> — Great for visual feedback like heatmaps and session recordings. PM Tip: Always pair quantitative data (e.g., drop-off rates) with qualitative data (e.g., user interviews). Data tells you what's happening; talking to users tells you why.</p>
+<h3>5. Documentation and Collaboration: Keep Everyone on the Same Page</h3>
+<p>PMs deal with a lot of information — market research, stakeholder feedback, specs, goals. Top tools: <strong>Confluence</strong> — Integrated with Jira, great for structured documentation and internal wikis. <strong>Notion</strong> — An all-in-one workspace that's flexible, beautiful, and perfect for PMs who like clean organization. <strong>Google Docs/Sheets</strong> — Still essential for fast collaboration and lightweight planning. PM Tip: Create a central "source of truth" doc for each product or project. This keeps everyone aligned and reduces duplicate questions.</p>
+<p>The right tools won't make you a better Product Manager overnight — but they will make your workflows more efficient, your communication clearer, and your decisions better informed. Just remember: tools are only as effective as the people using them.</p>`,
+"pd-lifecycle":`<h3>Introduction: Building Products Isn't Just About Coding</h3>
+<p>Behind every successful app, feature, or digital product you use, there's a structured process guiding its creation. That process is called the Product Development Lifecycle (PDLC) — a series of phases that take an idea from raw concept to real-world launch (and beyond). While developers write the code and designers create interfaces, Product Managers (PMs) navigate the lifecycle, ensuring alignment across teams and purpose behind every decision.</p>
+<h3>1. Ideation: Where It All Begins</h3>
+<p>The journey starts with identifying a real problem or unmet need. This can come from user feedback, market trends, stakeholder input, or personal insights. PMs collaborate with teams to brainstorm potential solutions, ask the right questions, and generate product ideas that are viable and valuable. For example, Airbnb didn't begin as a billion-dollar business. It started with two guys renting out air mattresses to cover rent. That initial pain point — finding affordable lodging — sparked a larger idea that transformed the travel industry. At this stage, PMs evaluate ideas using frameworks like SWOT analysis or feasibility studies.</p>
+<h3>2. Research and Validation: Test Before You Build</h3>
+<p>Before investing in design or development, PMs validate whether the proposed solution actually solves the problem. This means: interviewing potential users, analyzing existing data or market benchmarks, creating surveys or low-fidelity prototypes, running MVP (Minimum Viable Product) experiments. Take Dropbox as an example. The founders validated demand by releasing a simple video explaining the concept. The feedback they received helped shape the actual product — and build an early waitlist of enthusiastic users. The goal here is to minimize risk, gather evidence, and confidently move forward knowing there's demand for what you plan to build.</p>
+<h3>3. Design and Development: Turning Concepts Into Reality</h3>
+<p>Once an idea is validated, the product team moves into design and development. Designers create user flows, wireframes, and prototypes using tools like Figma or Sketch. Then developers get to work. Agile methodologies (like Scrum or Kanban) guide this phase, breaking work into manageable sprints. PMs write user stories, prioritize features in the backlog, and act as the bridge between design and engineering. Think of how Spotify launched — it began with a desktop-only MVP focused solely on fast music streaming. From there, they gradually added personalized playlists, mobile apps, and social features based on user demand.</p>
+<h3>4. Testing, Launch, and Feedback: The Real World Test</h3>
+<p>Even after development is "done," the product isn't ready for prime time until it's been tested. QA teams test for bugs, usability, and performance. PMs often organize beta launches or A/B tests to validate product assumptions in a live environment. Once testing is complete, it's time to launch — often in collaboration with marketing, sales, and customer support. But launch isn't the finish line — it's just the beginning of iteration. PMs track post-launch data using tools like Google Analytics, Mixpanel, or Hotjar.</p>
+<h3>5. Iteration and Growth: The Product Never Sleeps</h3>
+<p>Products that win don't just launch — they evolve. The final phase of the lifecycle is about continuously improving the product based on user feedback, data, and changing business priorities. New features are planned, outdated ones are removed, and performance is optimized. A great example is Instagram. What began as a simple photo-sharing app has evolved into a full social ecosystem with stories, shopping, messaging, and Reels — all developed through continuous iteration guided by data and user behavior.</p>
+<p>Understanding the product development lifecycle gives you a blueprint for building products that matter. At its core, great product development is not about building faster — it's about building smarter.</p>`,
+"apis-sdks":`<h3>API's and SDK's Basics</h3>
+<p>SDK and API are two key tools developers encounter during software development cycles. Even though there are many features between them, it's always some fundamental difference between these two tools. These two tools are relatively used to make the delivery timeless and improve efficiency in development activities. Both these tools are contributing so much value add to the overall development process and delivery time.</p>
+<p>SDKs are quite familiar words in the Software Industry as mobile technologies are booming up now. SDK provided end-to-end software delivery support for a developer. SDK stands for software development kit. Also known as a devkit, the SDK is a set of software-building tools for different platforms. Every SDK is composed of multiple sets of tools — mainly: <strong>a)</strong> Code Samples: Preloaded framework of code or samples. <strong>b)</strong> Code Libraries: Provide a shortcut with code sequences that programmers use. <strong>c)</strong> Compiler: Translates from one programming language to the one in which you will work. <strong>d)</strong> Testing and analytics tools: Perceptive product testing and production environments. <strong>e)</strong> Documentation and Debuggers: For developers instructions and issue identification in codes.</p>
+<p>API (Application Programming Interface) — working as a separate solution or included within an SDK, an API facilitates communication between two platforms. It does this by allowing its registered software to be leveraged by third-party developers. The API not only allows for on-demand data exchange, it stipulates how that information should be exchanged. Connecting disparate software applications for a stronger overall product offering. Key benefits of using APIs are: Shortening the development cycle, reducing resources, trust and brand recognition, and providing maximum efficiency for the end users.</p>
+<p>API can consist of two parts: <strong>a)</strong> API the interface: APIs can access it directly via keyword (for web API) or indirectly from a separate interface (for REST API). <strong>b)</strong> API's Technical specifications and documentation: This information explains how to integrate the API and effective usage.</p>`,
+"product-backlog":`<h3>Product Backlog Strength Really Matters</h3>
+<p>Product Backlogs can come from any direction — it can be from developers, testers, SMEs, from discussions with stakeholders, from discoveries, client reviews, or feedback, as a new additional improvement. Likewise anyone can act as a key for creating a backlog of items for the Product Owner. But the product owners and business analysts are the key members to collaborate and iterate the healthy backlogs for the team. As we all know backlogs are the key backbone for any agile product — the more accurate backlogs are always a positive directive for the product. Backlog management is the key and ultimate goal of a business person who is the Product Owner for the project. Healthy backlogs always ensure that the product vision and roadmaps are going in alignment with the product development. Always it's the happy road for the developers and the testers. Always a healthy backlog reduces the workload for the Development Lead and the Scrum Master, who always worry about sprint plans, workloads of individuals, and completion dates of any product.</p>
+<p>So the healthy backlog is always implied healthy and stable products for the customers and will be a value for the firm, and futuristic growth of the entire system associated with the product.</p>
+<p>Key points that need to be considered for a healthy backlog are: 1) Product Owner/Business Analyst should keep a collaborative approach in backlog items. 2) Need to take right decisions on the list in time based on the product roadmaps and vision. 3) Always do proper validations and verifications on user stories before creating any backlog items. 4) Keep proper tracking of items using various matrices based on the product. 5) Always keep a transparent and proactive approach for any inquiries from the team. 6) Verify the mapping documents frequently. 7) Always try to keep the backlog items clear and healthy with references and UI/UX diagrams. 8) Backlogs should be clear before Sprint Plan meetings for the team. 9) Backlogs should be a future directive for the product as directed and envisioned in the vision documents. 10) Always think beyond and try to build backlogs market aware and aligned.</p>`,
+"product-owner":`<h3>Product Owner: A Person of Multifaceted Talent</h3>
+<p>A Product Owner is a multifaced talent. His/her responsibility is shared across multiple layers of shared responsibility. This role is aligned with a chain of responsibilities — should be a visionary of end-to-end product growths, this should be achieved through product strategy mapping and product vision documents. Should take a strategic stand in many situations of a product life cycle, sometimes need to be political towards the stakeholders, sometimes should be neutral and opposition to make sure that there is no deviation happening in product vision.</p>
+<p>Always should be a good tactical person with lots of situational approaches, to achieve the product goals. PO is solely responsible for product backlogs, and health, and should be able to prioritize the benefits with different possible ways to keep the product on track always. He should be a motivational speaker, final answer for developers, and last hope for testers too. Product owner is managing the Definition of Done, and setting KPIs for the success of the product. Product owner should get proper support and guidance on this from various stakeholders and product managers based on the organization structure, and type of product.</p>
+<p>Product owner is responsible for proper collaborations with various teams and stakeholders in order to achieve the goal based on the product vision. For this, PO should do proper research to find the right candidates and should be able to analyze the impact on each of them in the product. He should be able to say NO when required based on the team's capacity and sprint velocities during requirement gathering discussions. However, this NO should be attained through a balancing act, without impacting the product health and stakeholders' expectations. If quoting Roman Picher's words, "PO should neither be a Feature Broker nor Be a Dictator" — it covers all the necessary skills required for a Product Owner.</p>
+<h3>Key Product Owner Indicators</h3>
+<p><strong>Own the product vision.</strong> As the person responsible for product strategy, you'll build the vision and ensure it aligns with the overall company strategy. You'll make tough prioritization decisions while helping the team think strategically about long-term opportunities while balancing short-term objectives. <strong>Become an expert.</strong> You'll become an authority on the practices, innovations, trends, and history of your domain. <strong>Represent the customer.</strong> You'll serve as the champion and voice of customers in every conversation, building direct relationships with customers and immersing yourself in their experience of the product. <strong>Collaborate across teams.</strong> Your success will require coordination across multiple teams and stakeholders. <strong>Make data-informed decisions.</strong> You'll use both quantitative and qualitative data to identify customer pain points and prioritize your product roadmap. <strong>Experiment.</strong> You'll drive improvements through iterative design and experimentation. <strong>Measure success.</strong> You'll own the definition of "success" for your product area — making sure the criteria are measurable, attainable, and visible to all stakeholders.</p>`,
+"req-priority":`<h3>Product Owner: Requirement Prioritization Techniques</h3>
+<p>Requirement prioritization is used in software product management for determining which requirements of the product should be included in a certain release. Requirements are also prioritized to minimize risk during development so that the most important or high-risk requirements are implemented first. Requirement prioritization is used to define the ordering or schedule for executing requirements based on their priority or importance with respect to stakeholders' viewpoints.</p>
+<p>There are different Prioritization Techniques used for this:</p>
+<p><strong>MOSCOW</strong> — Must Have, Should Have, Could Have, Would Have.</p>
+<p><strong>Ranking</strong> — Providing Numerical Ranking for the Requirements.</p>
+<p><strong>KANO Analysis</strong> — This is based on satisfaction of the stakeholders: Basic Factors (Dissatisfiers), Performance Factors (Satisfiers), Excitement Factors (Delighters).</p>
+<p><strong>User Story Mapping</strong> — Arranges as a map of user stories based on the releases and planning with stakeholders, providing end-to-end clarity on the product.</p>
+<p>There are many more techniques available for requirement prioritization: Binary Search Tree, AHP (Analytic Hierarchy Process), Hundred Dollar, Minimal Spanning Tree, Data Mining and Machines, Numerical Assignments, and Bubble Sorts are some among them.</p>`,
+"stakeholder-mgmt":`<h3>BUSINESS ANALYST — Stakeholder Management</h3>
+<p>Stakeholder Management is a key role for any Business Analysis Person. A stakeholder is a group of persons or an individual who really got affected by a business change or due to a product. There are mainly two types of stakeholders.</p>
+<p><strong>Who receives the Benefits:</strong> Business Executives, Customers, End Users, Subject Matter Experts, Regulators, etc.</p>
+<p><strong>Who delivers the Changes:</strong> Business Sponsors, Support Business Units, Project Managers, Developers, Testers, Trainers, etc.</p>
+<h3>Stakeholder Management Techniques</h3>
+<p>There are mainly 5 key stakeholder management techniques that can be used to identify the key stakeholders: Contacting Business Sponsors/Project Managers, Organization Charts, Models (Complex Models), Document Analysis, and Based on Stakeholder Discussions.</p>
+<h3>Types of Matrices Used for Stakeholder Management</h3>
+<p><strong>RACI Matrix (Roles Based Matrices):</strong> R — Responsible (Business Analyst), A — Accountable (Project Manager), C — Consulted (Subject Matter Expert), I — Informed (Technical or Test Leads).</p>
+<p><strong>Stakeholder Matrix:</strong> The matrix that contains details about all the stakeholders with their Name, Role, Contact, Impact, and Influence.</p>
+<p><strong>Personas:</strong> Are fictional characters used to represent the customers created based on the internal assessments for requirement gathering techniques.</p>
+<h3>Major Challenges in Stakeholder Management</h3>
+<p><strong>Conflicting Stakeholders:</strong> Need to meet them separately. <strong>Unavailability of Stakeholders:</strong> Explain the need for the particular stakeholder; if unavailable, request an additional POC for the meetings.</p>`,
+"req-elicitation":`<h3>Requirements — Elicitation and More</h3>
+<p>A requirement is a usable representation of a need. It describes what a system, product, or process must do — not how it must do it. The distinction between "what" and "how" is fundamental: requirements describe the problem space; design describes the solution space. Conflating the two is one of the most common causes of over-engineered solutions and missed user needs.</p>
+<h3>Three Types of Requirements</h3>
+<p><strong>Business Requirements</strong> describe the organizational goals and outcomes that the project must achieve. They answer: why are we doing this? What business problem are we solving? "Reduce customer onboarding time from 3 days to 24 hours" is a business requirement. <strong>Stakeholder Requirements</strong> describe what specific stakeholders need from the solution to achieve the business outcomes. "The onboarding team must be able to review and approve applications from a single dashboard" is a stakeholder requirement. <strong>Solution Requirements</strong> describe the characteristics of the solution itself — both functional (what the system does) and non-functional (how it performs, how secure it is, how it scales).</p>
+<h3>Elicitation Techniques</h3>
+<p><strong>Interviews:</strong> One-on-one conversations with stakeholders are the richest source of requirements. Prepare open-ended questions, listen more than you talk, and probe for the "why" behind every stated need. <strong>Workshops:</strong> Bring multiple stakeholders together to align on requirements and surface conflicting needs early. Facilitated workshops with whiteboards and structured exercises are particularly effective for complex domains. <strong>Observation / Job Shadowing:</strong> Watching users work is often more revealing than asking them — people describe what they think they do, not what they actually do. <strong>Document Analysis:</strong> Existing process documentation, reports, and system specs are invaluable starting points that reduce elicitation time significantly.</p>
+<div class="post-quote">"Good requirements are not discovered — they are elicited through skill, patience, and the right questions."</div>`,
+"salesforce-limits":`<h3>Salesforce Limitations</h3>
+<p>We all know Salesforce is a cloud environment that's shared by hundreds of organizations and users worldwide. As this technology and platform are still nourishing to its maturity, Salesforce lacks many features which are developers' headaches many times. As far as a business or product person, we should only worry about how we can achieve business goals, especially working in Customer Relationship Management systems, where the customer's expectations are always sky-high.</p>
+<p>Like every cloud environment, resources aren't infinite. In every distributing platform, resources such as memory, database, the number of processed records and script statements, etc. are limited by platforms. These limits are well-known in the Salesforce community as Governor Limits.</p>
+<h3>There are two types of Governor Limits in Salesforce</h3>
+<p><strong>1) Apex Governor Limits:</strong> a) Per-Transaction Apex Limits, b) Per-Transaction Certified Managed Package Limits, c) Force.com Lightning Platform Apex Limits, d) Static Apex Limits, e) Size-Specific Apex Limits.</p>
+<p><strong>2) Non-Apex Governor Limits:</strong> a) Inbound Email Limits, b) Push Notification Limits, c) Chatter REST API Limits, d) Limits for Salesforce API Requests, e) SOAP API Call Limits, f) API Query Cursor Limits, g) Metadata Limits, h) SOQL and SOSL Governor Limits in Salesforce, i) Visualforce Limits.</p>
+<p>You can learn more about this from the <a href="https://trailhead.salesforce.com/en" target="_blank">Trailhead community by Trailblazers</a>. It's really a value add for all new and existing Salesforce tenderfoots.</p>`,
+"pm-intro":`<h3>Product Management — An Introduction</h3>
+<p>Products are for everyday lives — so one way or another we are all familiar with the word Product. However, in IT environments Products can have wide aspects, which means this can be a visually impacting product, a physically existing product, a concept, an idea, a code snippet, an API, servers — likewise anything can be considered in our scope as a product. So, in short, the scope of the product and its management area is vast and unlimited.</p>
+<p>In the Product Management arena, the Key and ultimate Aim for any product is Profit — it can be from any perspective too: usability, sales, time, for better living, and of course money too. So, if we elaborate more on this: Sell or Resell a product maximum times, Market share holding or the reach of the product, technical adaptability, and easiness of use are some of the fundamental benchmarks of any product we create as per Product Management concepts.</p>
+<p>So the people who are working in the Product Management area should always possess a balanced view on product management — that means, a Product Owner or Manager should aim the bulls-eye between four areas while visualizing any product, they are: Operational, Technical, User Experience, and finally the Market Value. So the area of Product Management is limitless.</p>
+<h3>The Key Roles that come under any Product Development are</h3>
+<p>1) Product Managers — Who really run the show. 2) Product Owners — Who really act as key actors on the stage. 3) Business Analysts — Supporting Actors for the show. In between these 3 roles, different institutions have a different outlook as well; there is no specific stubborn rule that exists about these roles. However, the first two roles are individually performing roles with multiple collaboration skills.</p>`,
+"product-vision":`<h3>Product Vision and Strategy</h3>
+<p>Product Vision is the benchmarking thought for creating any product. Product vision will be the starting point for any product we are thinking about — so our creativity should reach the skies to bring out the best from our thoughts. Of course, a product owner or a business person should always have an endless vision about anything before fully scribing any thoughts about any products. Without having a real visionary mindset, a product owner cannot be successful in his products.</p>
+<p>So, the Product Owner should act like an artist while creating a vision, and could be able to think about the product at the next level as such. In product vision we need to have an inspiring vision and a collaborative mindset about the work we are about to start. Even though a vision is not awesome, but not getting enough attention from the stakeholders or the execution team, then the initial draft of the product will become a failure.</p>
+<p>Product Strategy is a roadmap to reach the goal envisioned in the Product Vision. Product vision can be a limited sentence; however, the Strategy for the Product should always be clear — how easily we can achieve the goal embarked in the Product Vision. Product vision and strategy together will bring the best product from the statements. There can be limitless opportunity while discussing this product roadmap with the stakeholders. That can add more value to the product in future than envisioned initially.</p>
+<div class="post-quote">"Simplicity is the ultimate sophistication." — Leonardo da Vinci</div>`,
+"yaml":`<h3>YAML: Basic Understanding</h3>
+<p>YAML (Yet Another Markup Language) is a human-friendly data serialization language for all programming languages. It is commonly used for configuration files and in applications where data is being stored or transmitted. YAML targets many of the same communications applications as Extensible Markup Language but has a minimal syntax that intentionally differs from SGML.</p>
+<h3>Syntax</h3>
+<p>YAML accepts the entire Unicode character set, except for some control characters. Whitespace indentation is used for denoting structure; however, tab characters are not allowed as part of that indentation. Comments begin with the number sign (#), can start anywhere on a line, and continue until the end of the line. List members are denoted by a leading hyphen (-) with one member per line. An associative array entry is represented using colon space in the form key: value with one entry per line. Strings are ordinarily unquoted, but may be enclosed in double-quotes or single-quotes. Multiple documents within a single stream are separated by three hyphens (---). Repeated nodes are initially denoted by an ampersand (&amp;) and thereafter referenced with an asterisk (*).</p>
+<h3>Key Features of YAML</h3>
+<p>1) Indented delimiting. 2) Non-hierarchical data models. 3) Practical considerations. 4) Security. 5) Data processing and representation.</p>
+<h3>YAML vs JSON vs XML</h3>
+<p>JSON syntax is a basis of YAML version 1.2. YAML has many additional features lacking in JSON, including comments, extensible data types, relational anchors, strings without quotation marks, and mapping types preserving key order. YAML is much more complex compared to TOML but is less verbose, more DRY, and syntactically less noisy. YAML lacks the notion of tag attributes that are found in XML. Instead, YAML has extensible type declarations (including class types for objects).</p>`,
+"disqus":`<h3>Comment Section for Google Sites using DISQUS</h3>
+<p>First of all, I would like to thank disqus.com for providing an awesome service to all bloggers and website makers. Adding comments to your Google Site is so easy — just follow the steps mentioned below.</p>
+<p>1) Login to disqus.com. 2) Select your plan as per your requirement (Paid/Unpaid basic options are available). 3) Add your website name. 4) Select Platform (For Google Sites use Universal code). 5) Get your code from DISQUS as below and do necessary changes:</p>
+<pre style="background:#f5f7fa;padding:1rem;border-radius:8px;font-size:.82rem;overflow-x:auto;border:1px solid var(--border)">
+&lt;div id="disqus_thread"&gt;&lt;/div&gt;
+&lt;script&gt;
+(function() {
+var d = document, s = d.createElement('script');
+s.src = 'https://XXXXXXXXXXXXXXXX.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+&lt;/script&gt;
+</pre>
+<p>Edit the RECOMMENDED CONFIGURATION VARIABLES section using your CMS or platform's dynamic values. You are done. You can moderate the comments from your DISQUS site. Thank you.</p>`,
+"as400":`<h3>Application Systems 400 (AS400) — Basics</h3>
+<p>IBM Announced in late 80's, as a newest member of midrange computers. Started with System/3 which supported only batch processing, later System 32. In 1978 System/34 (multiuser computer to offer interactive processing using display stations) and then came System 38 (predecessor of AS400). Finally evolved the AS400 and its operating system is called OS/400.</p>
+<h3>Security Levels and Architecture</h3>
+<p>Security Level 10 — No longer supported on new systems. Level 20 — Control who can sign on to system. Level 30 onwards — Require username and password and checks authorization on objects or resources. Levels 40 and 50 — Prevents users from accessing system objects. Level 50 — Prevents passing invalid parameters.</p>
+<p><strong>Libraries</strong> — The most important concept in AS400. A library is just a container with a name. In other systems, it can be called as a folder or a directory. There are System Libraries and User Libraries.</p>
+<h3>Key Objects</h3>
+<p>Files (*FILE), Programs (*PGM), Commands (*CMD), Job Queues (*JOBQ), Message Queue (*MSGQ), Data Areas (*DTAARA), Output Queues (*OUTQ), User Profiles (*USRPRF). It is a unique way to locate objects in the system. When you manipulate an object with any command, the system uses the library list to find the object from the library list.</p>
+<h3>Data Description Specifications</h3>
+<p>1) Physical Files, 2) Logical Files, 3) Display Files, 4) Printer Files. The languages used in the Systems are RPG LE and CL.</p>`,
+"icetools":`<h3>JCL Programs — ICETOOL</h3>
+<p>This ICETOOL is used to create a report that contains the number of occurrences of unique values which we specified. Consider in this example, the unique value is formed by the combination of TYPECODE, APP IND and COMP IND. Like this we could have any number of combinations.</p>
+<pre style="background:#f5f7fa;padding:1rem;border-radius:8px;font-size:.82rem;overflow-x:auto;border:1px solid var(--border)">
+//S1    EXEC  PGM=ICETOOL
+//TOOLMSG DD SYSOUT=*
+//DFSMSG  DD SYSOUT=*
+//IN DD DSN=WCSW.NONX.WCSP084D.WCS08430.SRT.G0958V00,DISP=SHR
+//OUT DD SYSOUT=*
+//TOOLIN DD *
+ OCCUR FROM(IN) LIST(OUT)           -
+ ON(10,9,CH) ON(34,1,CH) ON(43,1,CH) ON(VALCNT) -
+ HEADER('TYPECODE') HEADER('APP IND') HEADER('COMP IND') -
+ HEADER('OCCURANCE') BLANK
+/*
+</pre>`,
+"jcl-programs":`<h3>JCL Programs — Samples for COBOL, DLI, DB2, BMP</h3>
+<p>The following are the types of JCLs used to compile COBOL programs available in Mainframe systems:</p>
+<h3>COBOL + DLI</h3>
+<p>All DLI programs run as subroutine to IMS. The IMS program name is DFSRRC00. It runs batch as well as online programs as a subroutine. So we have to pass the program name and PSB name through the PARM field.</p>
+<pre style="background:#f5f7fa;padding:1rem;border-radius:8px;font-size:.82rem;overflow-x:auto;border:1px solid var(--border)">
+//Step01 exec pgm=DFSRRC00,
+         Parm=(DL1,Pgm name,PSB name, ,,,,,,,,,,,N)
+</pre>
+<h3>COBOL + DLI + DB2</h3>
+<pre style="background:#f5f7fa;padding:1rem;border-radius:8px;font-size:.82rem;overflow-x:auto;border:1px solid var(--border)">
+//Step01 dd dsn=DFSRRC00,
+         Parm=(DL1,DSNMTV01,PSB name, ,,,,,,,,,,,N)
+Pass the region, pgm name and plan name through the control card.
+//DDITV02  DD DSN=&CTLCARDS(IYM275D),DISP=SHR
+DB2P,SYS1,DSNMIN10,,A,-,,IYMBTPL,IYM275
+END
+</pre>
+<h3>COBOL + BMP</h3>
+<pre style="background:#f5f7fa;padding:1rem;border-radius:8px;font-size:.82rem;overflow-x:auto;border:1px solid var(--border)">
+// EXEC PGM=DFSRRC00,
+// PARM=(BMP,IMM0270,IMM0270,,,W10028,,,
+ &CHKPTID,,,,,&ENV1,AGNALL,&DB2,,,,5)
+</pre>
+<p>PSB must be promoted to the region. If the program is a checkpoint restart, the checkpoint ID taken from the job must be given in the CHKPTID parameter. For a BMP program ensure the IMS ONLINE is given as 'Y' while compilation.</p>
+<h3>COBOL + BMP + DB2</h3>
+<p>The parm are same as COBOL + BMP. RTT entry needs to be set up. RTT is Resource Translation Table. If RTT entry is not present, SQL will throw -922 error.</p>`,
+"unikix-experience":`<h3>Unikix Experience — Mainframe Rehosting on Open Systems</h3>
+<p>I got a unique chance to work with a client who had rehosted the mainframe to IBM AIX server, which enables the same functionalities of IBM CICS in Unix environment. It's an awesome job done by Clerity Solutions for seamless business operations for the customers by rehosting it.</p>
+<p>UniKix Mainframe rehosting Software, from Clerity Solutions, enables the users to rehost legacy mainframe applications on open systems platforms such as IBM AIX, HP-UX, Sun Solaris, and Linux, making it feasible to replicate mainframe functionality on open systems without needing to rewrite applications in a new language.</p>
+<p>Two products, UniKix Transaction Processing Environment (TPE) and UniKix Batch Processing Environment (BPE), together provide an environment for running CICS and batch applications on open systems. Similar to mainframe CICS, UniKix TPE software launches a transaction and then initializes the entire operating environment, handling all the data access, communication, and calls between programs. UniKix also provides several facilities to share resources and data between UniKix regions and IBM CICS systems. An IBM CICS mainframe system appears like a remote region to UniKix through Intersystem Communication (ISC).</p>
+<h3>Key Features of Unikix</h3>
+<p>Dynamic loading of shared libraries, including EXTFH libraries used to run batch programs. Interoperability with a variety of utilities that replicate mainframe functionality, such as external sort modules and utilities that handle complex calculations. Debugging of CICS COBOL programs using the ACUCOBOL-GT runtime debugger. Familiar EXEC CICS APIs. Integration with modern desktop environments. Easy access to enterprise-wide e-business applications.</p>`,
+"cobol-performance":`<h3>COBOL Performance Improvement Tips and Tricks</h3>
+<p>There are various methods of improving the efficiency of your code from the way you code your program to the compiler options you choose. Some of these techniques will not make any major difference to speed unless you are processing high volumes of data and/or code is going to be executed millions of times for each run. The points presented below are guidelines only.</p>
+<p><strong>1) Arithmetic.</strong> Some arithmetical calculations take longer than others. Multiplication and division take longer than adding or subtracting. So instead of multiplying a number by 2, try adding the number to itself. If you want to make a number negative, subtract it from 0 instead of multiplying by -1.</p>
+<p><strong>2) Order of Comparisons.</strong> The way you do comparisons on an IF or EVALUATE statement can affect performance. If you have multiple OR conditions on your IF statement, try to make sure that the condition most likely to be true is first in the list. Example: IF WS-STATUS = '00' OR '97' OR '96' — the program will check '00' first, which is most likely true, resulting in just one check instead of four.</p>
+<p><strong>3) Compiler Options.</strong> Some compiler options can result in longer running times. For example SSR, which checks for subscripts going out of range, actually adds extra code. SSR would be acceptable in a test environment but may not be appropriate in production.</p>
+<p><strong>4) Sorting.</strong> If at all possible avoid doing a sort within a COBOL program. COBOL sorts are very inefficient. If you must do a sort in a COBOL program, specifying the FASTSRT compiler option may speed up the sorting process.</p>
+<p><strong>5) Numbers.</strong> How you define numeric fields can have an impact on performance. If using a field for arithmetic or as a subscript with 8 or fewer digits, it is often best to define it as a binary number (COMP-1) that is signed. If the field has between 8 and 15 digits, define it as a Packed Decimal number (COMP-3) with an odd number of digits and signed. Using odd numbers of digits for PACKED DECIMAL (COMP-3) is 5% to 20% faster than using an even number of digits.</p>
+<p><strong>6) CALLs to Other Programs.</strong> When calling a subprogram with USING, try to specify as few parameters as possible. Each parameter passed requires an individual BLL cell to be allocated in the called program and may require additional registers.</p>
+<p><strong>7) PERFORMs.</strong> If you do a PERFORM paragraph, the compiler may convert this into up to six machine instructions. PERFORMs with VARYING will require many more. You should weigh up the pros and cons of maintainability with speed.</p>
+<p><strong>Performance comparison for table addressing:</strong> Using COMP to address a table is 30% slower than using indexes. Using COMP-3 to address a table is 300% slower than using indexes. Using DISPLAY data items to address a table is 450% slower than using indexes.</p>
+<p><strong>Rule of Thumb for SEARCH:</strong> For a table with less than 50 entries, go for SEARCH (Sequential Search). For greater than 50 entries, go for SEARCH ALL (Binary Search).</p>`,
+"mainframe-tips-tricks":`<h3>100 Mainframe Tips and Tricks</h3>
+<p>100 Mainframe tips and tricks collected from various sources, covering ISPF, JCL, COBOL, VSAM, FileAid, SORT, SDSF, CICS, and DB2.</p>
+<h3>ISPF Tips (Selection)</h3>
+<p><strong>TIP #001:</strong> To find changes since last SAVE command, issue COMPARE SESSION on the command line. <strong>TIP #003:</strong> To know which TSO Region you are in, issue SAREA on the command line — ISPF STATISTICS Pop-up window will show you the region. <strong>TIP #004:</strong> Precede commands with '&amp;' to make the command stay on screen after execution for reuse. <strong>TIP #005:</strong> While "member in use" message appears, press F1 twice to find out who is using the member. <strong>TIP #009:</strong> MAINFRAME has an "Autocomplete" feature. Go to ISPF 3.4, enter KEYS in the command line, set any key to AUTOTYPE, then type any Dataset partially and press the assigned PFkey. <strong>TIP #013:</strong> To find the last edited member, you can save keystrokes by placing the cursor on any column header in ISPF 3.4 and pressing ENTER to sort by that column.</p>
+<h3>JCL Tips (Selection)</h3>
+<p><strong>TIP #023:</strong> To protect a dataset from accidental deletion: LABEL=RETPD=04365 (till end of 2004) or LABEL=RETPD=10 (protect for 10 days). To force delete a protected dataset, use IDCAMS DELETE command with PURGE option. <strong>TIP #025:</strong> JES3 Statements also start with //*, but if the 4th column contains a JES3 keyword, the line is a JES3 statement, else it is a normal JCL comment. <strong>TIP #032:</strong> JCL has '//' in col 1 and 2 because the slashes date back to punched cards — if cards were put back to front in the reader, the slashes wouldn't be read first and the card deck could be rejected. <strong>TIP #036:</strong> &amp;SYSUID is a "system symbol" for which the system substitutes your TSO ID. It is the only system symbol that can be used in a batch job.</p>
+<h3>COBOL Tips (Selection)</h3>
+<p><strong>TIP #038:</strong> For ESDS VSAM file, in COBOL the SELECT clause DDNAMEs should be prefixed with AS-. If not done, an S213 ABEND might occur. <strong>TIP #042:</strong> Using an odd number of digits for PACKED DECIMAL (COMP-3) is 5% to 20% faster than using an even number of digits. <strong>TIP #043:</strong> Using COMP to address a table is 30% slower than using indexes. Using COMP-3 is 300% slower. Using DISPLAY data items is 450% slower. <strong>TIP #044:</strong> For a table with less than 50 entries, go for SEARCH (Sequential). For greater than 50, go for SEARCH ALL (Binary). <strong>TIP #055:</strong> Better way of initialization: INITIALIZE WS-RECORD REPLACING ALPHANUMERIC DATA BY SPACES NUMERIC DATA BY ZEROES.</p>
+<h3>VSAM Tips (Selection)</h3>
+<p><strong>TIP #060:</strong> IDCAMS Utility can't be executed without 2 DD Statements: SYSPRINT and SYSIN. <strong>TIP #062:</strong> DEFINE PATH command creates an alias for the VSAM base cluster. DEFINE ALIAS command creates an alias for non-VSAM datasets. <strong>TIP #065:</strong> To process a KSDS through an alternate key, the 5 IDCAMS commands needed are: DEFINE CLUSTER, REPRO, DEFINE ALTERNATEINDEX, DEFINE PATH, and BLDINDEX. <strong>TIP #068:</strong> To access a VSAM file both in CICS and in BATCH environment, define it as SHAREOPTION (2,3).</p>
+<h3>DB2 Tips (Selection)</h3>
+<p><strong>TIP #094:</strong> Avoid joins that involve more than two TABLES. Break it up into multiple SQL statements. A 5-table join used 4190 CPU hours in a month for a weekly process. Breaking it up dropped the usage to 9 CPU hours per month. <strong>TIP #097:</strong> To get only the first n rows: SELECT * FROM tablename FETCH FIRST n ROWS ONLY WITH UR. <strong>TIP #098:</strong> Use JOIN instead of Sub-Queries for performance. <strong>TIP #099:</strong> To select duplicate rows: SELECT columns FROM table GROUP BY columns HAVING COUNT(*) > 1. <strong>TIP #100:</strong> For SQL declaration of DECIMAL(n,m), the COBOL equivalent is PIC S9(n-m)v9(m) COMP-3.</p>
+<h3>CICS Tips (Selection)</h3>
+<p><strong>TIP #086:</strong> Use CALLs instead of LINKs in CICS. EXEC CICS LINK executes 1400 machine code instructions. CALL executes around 12 machine code instructions. Replacing EXEC CICS LINK with CALL improved Internal Transaction Response time by 23–78%, Total CPU Time by 15–23%, and Dynamic Storage use by 11–30%. <strong>TIP #088:</strong> CICS was initially called PUCICS — Public Utilities Customer Information Control System. <strong>TIP #089:</strong> ASKTIME = requests the current date and time. EIBTIME = field has the value at the task initiation time.</p>`,
+"genai-product-manager-2026":`<h3>Beyond the Hype: What GenAI Actually Does Well for PMs</h3>
+<p>After two years of intense hype cycles, the practical picture of GenAI in product management has become much clearer. It is not replacing PMs. What it does exceptionally well is accelerating the parts of PM work that are high-effort but relatively formulaic — PRD drafting, user research synthesis, competitive analysis, and stakeholder communications. The PMs getting the most value treat it as a thought partner and drafting accelerator, not an oracle.</p>
+<h3>High-Value Use Cases</h3>
+<p><strong>PRD and User Story Drafting:</strong> From blank page to structured first draft in 15 minutes instead of 3 hours. The PM still reviews, refines, and owns the output. <strong>User Research Synthesis:</strong> Paste 10 interview transcripts, ask for recurring themes and unmet needs — GenAI surfaces patterns across large qualitative datasets in minutes. <strong>Competitive Analysis:</strong> Rapidly synthesizes publicly available information about competitor features, pricing changes, and positioning shifts. <strong>Stakeholder Communications:</strong> Adjusts tone and level of detail for different audiences — board-level summary versus detailed engineering spec from the same underlying content.</p>
+<h3>Where GenAI Fails</h3>
+<p><strong>Strategy:</strong> GenAI cannot tell you which market to enter or which bets are worth taking. These require judgment built from domain knowledge, customer relationships, and competitive intuition that no model has. PMs who outsource strategic thinking to GenAI produce generic, undifferentiated roadmaps. <strong>User empathy:</strong> GenAI produces plausible-sounding user insights but has never talked to your customer. <strong>Novel problem detection:</strong> The most valuable PM insights often come from noticing something that doesn't fit — a skill GenAI currently lacks.</p>
+<h3>The Prompt Engineering Skill</h3>
+<p>The difference between GenAI outputs that save time and outputs that waste it is almost entirely in how you prompt. Build a personal library of well-crafted prompts for your most common tasks — PRD templates, competitive analysis frameworks, stakeholder update structures. This prompt library is a genuine competitive advantage.</p>
+<div class="post-quote">"GenAI is a multiplier on the clarity of your thinking. If your thinking is muddled, the output is confidently muddled. If your thinking is sharp, the output is very good very fast."</div>`,
+"digital-transformation-lessons":`<h3>5 Hard Lessons From Leading Digital Transformation Across 13 APAC Markets</h3>
+<h3>Lesson 1: Technology Is Never the Hard Part</h3>
+<p>After three years managing digital transformation across 13 APAC markets — deploying Salesforce CRM, SAP ERP, and Power BI across Southeast Asia, Australia, and beyond — the most consistent lesson is: the technology works. The people and processes are where transformations succeed or fail. Every significant delay, every post-go-live crisis, every adoption failure I encountered traced back to change management, not code. Investing in change management from day one — not as an afterthought — is the single highest-return investment in any transformation program.</p>
+<h3>Lesson 2: Localise Everything, Standardise the Core</h3>
+<p>What works in Thailand does not automatically work in Australia. Sales processes, reporting preferences, compliance requirements, and even the meaning of certain data fields vary significantly across APAC markets. Standardise the data model and the reporting layer. Localise the workflows and the user experience. Every market can see the same KPIs on the same dashboards while working in processes that match how they actually sell and operate.</p>
+<h3>Lesson 3: Data Quality Is a Political Problem</h3>
+<p>Every transformation involves a data quality crisis. The data is bad because nobody owned it, nobody was accountable for its quality, and the old system never surfaced the errors because nobody was looking. Fixing data quality requires assigning clear ownership, making quality visible in leadership dashboards, and changing the incentives around data entry. Technology helps but it cannot substitute for accountability.</p>
+<h3>Lesson 4: The Pilot That Goes Too Well Is a Warning Sign</h3>
+<p>The pilot team is usually the most motivated, the most tech-savvy, and the most supported. Build your pilot explicitly to stress-test the rollout, not to prove the system works. Run the pilot with your worst-case users, not your best-case users. Document every escalation and every workaround — these are the issues that will appear at scale.</p>
+<h3>Lesson 5: Measure Adoption, Not Deployment</h3>
+<p>The most dangerous metric in a transformation programme is "go-live." It creates a perverse incentive to declare success the moment the system is technically available, regardless of whether anyone is actually using it. Measure adoption: daily active users, data entry completeness, feature utilisation rates, and time-to-complete on key workflows.</p>
+<div class="post-quote">"A system that is deployed but not adopted is an expensive disappointment. A system that is adopted and used daily is a transformation."</div>`,
+"scrum-product-owner-guide":`<h3>The Complete Scrum Product Owner Playbook for 2026</h3>
+<h3>Backlog Mastery: Three Zones</h3>
+<p>The sprint-ready zone (top 1–2 sprints fully refined, estimated, with acceptance criteria), the near-term zone (next 2–4 sprints roughly defined), and the future zone (epics and themes, intentionally vague, updated quarterly). Most POs over-refine the future zone, wasting hours on detail for work that may never be built. The most important backlog discipline is deletion — items untouched for more than two quarters should be archived or deleted.</p>
+<h3>Refinement That Actually Works</h3>
+<p>The most common refinement failure is POs walking into the session with pre-written stories and asking the team to estimate them. This produces rubber-stamp estimations and misses the entire point of refinement. Effective refinement starts with the problem: here is the user need, here is the outcome we are targeting — how should we solve this? The team should be actively involved in story decomposition.</p>
+<h3>Sprint Review: Your Most Underused Tool</h3>
+<p>Most sprint reviews are demos — the team shows what was built, stakeholders clap, and everyone goes home. This is a significant missed opportunity. The sprint review should be a feedback session: here is what we built, here is what we learned from using it, here is what we are now considering changing. Invite real users to sprint reviews when possible. Nothing focuses a product conversation faster than watching an actual customer interact with the software.</p>
+<h3>Stakeholder Management as a Core PO Skill</h3>
+<p>The PO role is unique in that you have significant responsibility but limited formal authority. The most effective POs over-communicate. Weekly stakeholder updates on roadmap status, sprint outcome summaries, proactive heads-up on upcoming priority shifts. Stakeholders who feel informed are far less likely to escalate, second-guess, or undermine the backlog prioritisation.</p>
+<div class="post-quote">"The PO's job is not to be right about priorities. It is to make the best possible decision with available information, communicate it clearly, and update it as new information arrives."</div>`,
+"data-analytics-pm":`<h3>Why PMs Should Learn Basic SQL</h3>
+<p>SQL is the single highest-return technical skill a non-technical PM can learn. It takes 2–4 weeks to reach functional proficiency, and it unlocks the ability to answer your own product questions without waiting for a data analyst. The queries you need as a PM are not complex — SELECT, WHERE, GROUP BY, COUNT, SUM, and a couple of JOINs cover 80% of PM analytics needs.</p>
+<h3>The Five Queries Every PM Should Know</h3>
+<p>1) User count by segment. 2) Feature adoption rate. 3) Retention cohort (users who signed up in month X and were active in month X+1). 4) Funnel conversion — step-by-step drop-off across a key user journey. 5) Top N users or segments by value.</p>
+<h3>Building Dashboards That Actually Get Used</h3>
+<p>Design every dashboard around one decision: what action will I take if this number is low? If you cannot answer that question for a metric, it should not be on the dashboard. The best PM dashboards have 4–6 metrics, each linked to a specific quarterly goal, each with a target and a current value.</p>
+<h3>Power BI for PMs: The Essentials</h3>
+<p>Connecting to data sources (SQL databases, Excel, SharePoint, Salesforce), building calculated measures with DAX (five functions cover 90% of PM use cases: CALCULATE, DIVIDE, DISTINCTCOUNT, DATESINPERIOD, SUMX), creating clear visualisations, and publishing self-refreshing dashboards that stakeholders can access themselves without manual updates.</p>
+<div class="post-quote">"The goal of data literacy for PMs is not to replace data analysts. It is to have better conversations with them — and to not need them for every question."</div>`,
+"ai-product-owner-role":`<h3>The AI Product Owner: A New Role for a New Era</h3>
+<p>The AI Product Owner is a hybrid role at the intersection of product management, machine learning, and data engineering. While a traditional PO focuses on feature delivery and user stories, an AI PO must additionally manage data pipelines, model performance metrics, training datasets, and ethical guardrails that underpin AI-powered features.</p>
+<h3>The Three Layers of AI Product Ownership</h3>
+<p><strong>The User Layer:</strong> What problem does this AI feature solve? What happens when the model is wrong? How does the user know whether to trust the output? These are traditional PM questions applied to a non-deterministic system — which makes them significantly harder to answer. <strong>The Model Layer:</strong> What data is the model trained on? What metrics evaluate model quality — precision, recall, F1? What is the acceptable error rate? How does model performance degrade over time as the real-world distribution shifts? <strong>The Infrastructure Layer:</strong> How is the model served in production? What is the latency budget? How do we monitor for data drift? What is the rollback plan if a model update degrades user experience?</p>
+<h3>The Skills That Differentiate Excellent AI POs</h3>
+<p><strong>ML literacy without ML depth:</strong> Understand confusion matrices, class imbalance, overfitting, and how RAG differs from fine-tuning — enough to have credible conversations with data scientists. <strong>Metric design:</strong> Defining success metrics for AI features that capture what users actually care about, not just what is easy to measure. <strong>Ethical reasoning:</strong> Surface bias, opaque decision-making, and surveillance capability concerns before launch.</p>
+<div class="post-quote">"An AI PO who cannot explain what the model is doing — and why it sometimes gets it wrong — has not done their job, regardless of how good the demo looks."</div>`,
+"enterprise-crm-implementation":`<h3>How to Lead a CRM Implementation That Actually Succeeds</h3>
+<p>The failure rate for CRM implementations is often cited at 30–60%. The failure is almost never technical. It happens because of insufficient user adoption, poor data quality going in, and misaligned expectations about what the CRM will actually do.</p>
+<h3>Start With the Business Problem, Not the Feature List</h3>
+<p>Before any vendor is evaluated, write a one-page document: what business process is broken today? What would success look like in 12 months? How will we measure it? This document becomes the evaluation criteria and go-live success metrics.</p>
+<h3>Data Migration Is Half the Project</h3>
+<p>The technical team will tell you data migration is a two-week workstream. In most enterprise implementations, it is two to four months. Plan for a full data quality audit before migration begins. Expect duplicate records, inconsistent naming conventions, missing required fields, and data that cannot be mapped to the new data model.</p>
+<h3>Build for Adoption, Not Completeness</h3>
+<p>Design your initial implementation for the 80% of use cases that cover 95% of day-to-day work. Features that drive adoption: mobile access, email integration, and dashboards that give salespeople information they actually want to see. Features that kill adoption: mandatory fields on every record, complex approval workflows, and reports designed for management rather than the users doing data entry.</p>
+<h3>Measure Adoption Like a Product</h3>
+<p>Track daily active users by team and region. Measure data completeness on key fields. Monitor login frequency trends. If adoption is declining in a specific market, investigate — it is almost always a usability problem, a workflow mismatch, or a training gap.</p>
+<div class="post-quote">"A CRM is not a database. It is a behaviour-change programme for your sales organisation. Design for the behaviour, not the data."</div>`,
+"writing-better-prd":`<h3>How to Write a PRD That Engineering Actually Reads</h3>
+<p>The average PRD is 20–40 pages long, written in Microsoft Word, full of passive voice, and largely ignored by the engineering team by the time development begins. Most PRDs do not answer the questions engineers actually have when they are building.</p>
+<h3>The One-Page PRD Structure</h3>
+<p><strong>Problem Statement (2–3 sentences):</strong> What user problem are we solving? What evidence do we have? <strong>Success Metrics (3–5):</strong> How will we know if this feature worked? <strong>Scope (two lists):</strong> What is IN scope and what is explicitly OUT of scope — the out-of-scope list prevents 80% of scope creep conversations. <strong>User Stories with Acceptance Criteria:</strong> Specific, testable, written from the user's perspective. <strong>Open Questions:</strong> Decisions still to be made, who is responsible, and by when.</p>
+<h3>Acceptance Criteria That Actually Work</h3>
+<p>Bad: "The feature should work correctly." Good: "Given a user with an active subscription, when they click Export, then a CSV file is generated within 3 seconds containing all records from the current view, with column headers matching the displayed field names." Good acceptance criteria are specific, testable, and written from the user's perspective. They do not describe implementation details. They do not use vague qualifiers like "appropriate" or "reasonable."</p>
+<h3>The Living Document</h3>
+<p>A PRD that is written before development and never touched again is an artefact, not a tool. Update it when scope changes, when open questions are resolved, and when requirements are refined. Track changes visibly so the team knows what has changed and why.</p>
+<div class="post-quote">"A PRD is not a contract. It is a shared understanding. Write it to create alignment, not to cover yourself."</div>`,
+"power-bi-for-pm":`<h3>Power BI for Product Managers: Build Your First KPI Dashboard</h3>
+<p>Power BI is the default BI tool in most large enterprises using Microsoft infrastructure. It is included in most Microsoft 365 enterprise licences — which means you likely already have access.</p>
+<h3>Step 1: Connect to Your Data</h3>
+<p>Power BI connects to SQL databases, Excel files, SharePoint lists, Salesforce, Dynamics 365, Google Analytics, and dozens of others. Before building any visuals, understand the data model — what each table contains, how tables relate, and what the grain of each table is (one row = one what?). Misunderstanding the data model is the most common source of incorrect dashboard metrics.</p>
+<h3>Step 2: Build Calculated Metrics with DAX</h3>
+<p>Five DAX functions cover 90% of PM use cases: CALCULATE, DIVIDE, DISTINCTCOUNT, DATESINPERIOD, and SUMX. Example: Activation Rate = DIVIDE(DISTINCTCOUNT(events[user_id]), DISTINCTCOUNT(users[user_id]), 0).</p>
+<h3>Step 3: Design for Decision-Making</h3>
+<p>Build every dashboard page around one question. Page 1: Is the product growing? (Signups, DAU/MAU, activation rate trending week-over-week.) Page 2: Are users retaining? (Cohort retention curves, churn rate, feature adoption.) Page 3: What is driving revenue? (MRR, expansion revenue, top segments.) Three pages, one question each, six metrics per page.</p>
+<h3>Step 4: Share and Automate</h3>
+<p>Publish to the Power BI service (app.powerbi.com), set up automatic data refresh (daily or weekly), and pin the most important visuals to a dashboard so stakeholders see headline metrics immediately without navigating between report pages.</p>
+<div class="post-quote">"The best dashboard is the one your stakeholders open on Monday morning before they open their email. Build toward that standard."</div>`,
+"agile-transformation-lessons":`<h3>Agile Transformation Lessons From the Enterprise Trenches</h3>
+<h3>The Uncomfortable Truth About Agile Transformations</h3>
+<p>Most Agile transformations in large enterprises produce the visual artifacts of Agile — standups, sprints, backlogs, retrospectives — without the underlying culture change that makes Agile valuable. Teams go through the motions. The failure happens for three consistent reasons: leadership treats Agile as a delivery methodology rather than an operating model, teams are asked to be Agile in their work but work within processes and approval chains that are deeply waterfall, and the organisation measures outputs (velocity, story points) rather than outcomes.</p>
+<h3>The Leadership Variable Is Decisive</h3>
+<p>Agile transformations succeed or fail at the leadership layer. The most valuable thing a senior leader can do: genuinely participate in sprint reviews — not to monitor progress, but to provide feedback and make decisions on the spot. A leader who asks teams to "take it offline and come back with a proposal" is imposing waterfall governance on an Agile process.</p>
+<h3>Metrics Drive Culture</h3>
+<p>If you measure velocity, teams will optimise for velocity. The DORA metrics that drive the right behaviours: cycle time (how long from "started" to "done"), deployment frequency (how often does working software reach users), change failure rate (what percentage of releases cause incidents), and time to restore (how quickly you recover from failures).</p>
+<h3>The Retrospective Is the Flywheel</h3>
+<p>Teams that conduct genuine retrospectives — not blame sessions or complaint forums, but structured examinations of process and outcome — improve continuously. The most effective format: What slowed us down this sprint? What went better than expected? What is the one thing we will do differently next sprint? One commitment, clearly owned, with a check-in at the next retrospective.</p>
+<div class="post-quote">"You are not doing Agile if your teams move fast but your approval processes move slow. Agility is an organisational property, not a team property."</div>`,
+"saas-metrics-guide":`<h3>The SaaS Metrics Hierarchy</h3>
+<p>At the top: ARR (Annual Recurring Revenue) and its growth rate. Below ARR: new ARR, expansion ARR, and churned ARR. Below those: the product and go-to-market metrics that drive each component. A PM who understands this hierarchy can connect product decisions to business outcomes in terms that leadership responds to.</p>
+<h3>Core Revenue Metrics</h3>
+<p><strong>MRR (Monthly Recurring Revenue):</strong> Sum of all active subscriber monthly fees. MRR growth = (New MRR + Expansion MRR - Churned MRR - Contracted MRR) / Starting MRR. <strong>Net Revenue Retention (NRR):</strong> Above 100% means existing customers are expanding faster than churning — a signal of strong product-market fit. Above 120% is exceptional.</p>
+<h3>Customer Economics</h3>
+<p><strong>CAC (Customer Acquisition Cost):</strong> Total sales and marketing spend / new customers acquired. Include fully loaded costs — salaries, tools, and programmes. <strong>LTV:CAC Ratio:</strong> Below 1:1 means losing money on every customer. Above 3:1 is healthy. Above 5:1 might indicate under-investment in growth. <strong>CAC Payback Period:</strong> Below 12 months is strong; above 18 months is a concern.</p>
+<h3>Product Health Metrics</h3>
+<p><strong>Activation Rate:</strong> Percentage of new signups who reach the first meaningful value moment within 7–14 days. Low activation is the most common and most fixable early SaaS problem. <strong>Monthly Churn:</strong> Above 2% implies losing half your customers every year. <strong>NPS:</strong> Above 50 is excellent. More valuable than the score: qualitative feedback from detractors — it is your roadmap for the most impactful improvements.</p>
+<h3>What To Do When Metrics Move in the Wrong Direction</h3>
+<p>When churn increases: run exit interviews with churned customers before assuming you know the cause. When activation drops: look at what changed recently. When NPS falls: read every verbatim, group by theme, and prioritise the top two themes. Don't build features — fix problems.</p>
+<div class="post-quote">"SaaS metrics are a diagnostic tool, not a report card. Use them to find where value is leaking, not to declare success."</div>`,
+};
+
 /* TYPED */
-const ROLES=['Sr. Business Analyst','Product Owner','Digital Transformation Leader','IT Solution Designer','Business Operations Expert','Agile Coach & Scrum Master'];
-let ri=0,ci=0,del=false;
+var ROLES=['Sr. Business Analyst','Product Owner','Digital Transformation Leader','IT Solution Designer','Business Operations Expert','Agile Coach & Scrum Master'];
+var ri=0,ci=0,del=false;
 function typeIt(){
-  const el=document.getElementById('typedEl');if(!el)return;
-  const w=ROLES[ri];
+  var el=document.getElementById('typedEl');if(!el)return;
+  var w=ROLES[ri];
   el.textContent=del?w.slice(0,--ci):w.slice(0,++ci);
   if(!del&&ci===w.length){del=true;setTimeout(typeIt,1900);return}
   if(del&&ci===0){del=false;ri=(ri+1)%ROLES.length;setTimeout(typeIt,350);return}
@@ -607,12 +1259,12 @@ function typeIt(){
 typeIt();
 
 /* NAV */
-function goTo(e,id){if(e)e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})}
+function goTo(e,id){if(e)e.preventDefault();var el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'})}
 function toggleMob(){document.getElementById('mobMenu').classList.toggle('open')}
 window.addEventListener('scroll',function(){
   document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
   document.getElementById('btt').classList.toggle('show',window.scrollY>400);
-  var secs=['about','skills','experience','blogs','contact'],cur='';
+  var secs=['about','skills','experience','blogs','book','contact'],cur='';
   secs.forEach(function(id){var el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-130)cur=id});
   document.querySelectorAll('.nav-links a').forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+cur)});
 });
@@ -654,244 +1306,183 @@ document.getElementById('tl').innerHTML=EXP.map(function(e){
 }).join('');
 setTimeout(initReveal,100);
 
-/* BLOGS */
 /* ============================================================
-   HOW TO ADD A NEW BLOG POST — HARIKUMAR R
+   BLOGS DATA
    ============================================================
-   1. Copy one of the blog objects below (between the { } braces)
-   2. Paste it at the TOP of this array (after the "[" opening)
-   3. Fill in these fields:
-      - id:       Unique short name, no spaces e.g. 'my-new-post'
-      - date:     e.g. 'Mar 20, 2026'
-      - tag:      Pick from: 'AI & PM' | 'Strategy' | 'Analytics' |
-                  'Technology' | 'Career' | 'Agile' | 'Tools' |
-                  'Collaboration' | 'Business Analysis' | 'PM Basics' | 'Tips'
-                  OR add your own new tag string
-      - title:    The blog post headline
-      - excerpt:  2-3 sentence summary shown on the card (no HTML)
-      - full:     The full article HTML (use <h3>, <p>, <strong>,
-                  <div class="post-quote"> tags)
-                  If you leave 'full' out, a "Read on Blog" link appears.
-   4. Save the file and refresh — done! No other changes needed.
+   HOW TO ADD A NEW POST:
+   1. Copy a blog object below and paste at the TOP of BLOGS array
+   2. Fill in: id, date, tag, title, excerpt, full (HTML string)
+   3. Save and redeploy — done!
    ============================================================ */
+
 var BLOGS=[
-  /* ── NEW POST 1 ── */
-  {id:'top-ai-tools-pm-2026',
-   date:'Mar 20, 2026',
-   tag:'AI & PM',
-   title:'Top AI Tools Every Product Manager Must Know in 2026',
-   excerpt:'AI has moved from optional to essential for PMs. Here is a practical, research-backed guide to the best AI tools transforming product management in 2026 — from documentation to discovery, analytics, and agentic workflows.',
-   full:`
-<h3>Why AI Tools Are No Longer Optional for PMs</h3>
-<p>The numbers are hard to ignore. <strong>78% of high-performing product teams</strong> already use at least one AI-powered tool — a 45% jump from just a few years ago. Generative AI has increased PM productivity by up to <strong>40%</strong>, slashing time spent on documentation, feedback synthesis, and sprint admin so PMs can focus on what actually matters: strategy and customers.</p>
-<p>The challenge is no longer "should I use AI?" It is "which tools are worth my time, and where do they actually fit in my workflow?" After deep research into the 2026 PM tool landscape, here is a clear breakdown by use case.</p>
-
-<h3>1. Documentation & PRD Writing — ChatPRD</h3>
-<p><strong>ChatPRD</strong> is the standout tool for PMs who write product requirement documents. Trusted by over 100,000 PMs, it turns rough notes into fully structured PRDs, user stories, and acceptance criteria in minutes — not days. It integrates directly with Notion, Confluence, Linear, Google Docs, and Slack, so documents flow straight into your existing tools without copy-paste friction.</p>
-<p>Its agentic mode is what sets it apart: ChatPRD proactively flags gaps in your requirements, suggests edge cases you may have missed, and coaches you to write at a senior PM level. One engineering manager summed it up well — the Linear integration alone saves his team hours every sprint, with full context pushed directly to tickets.</p>
-<p><strong>Best for:</strong> Solo PMs, fast-moving startups, and anyone who writes a lot of product documentation.</p>
-
-<h3>2. Feedback Synthesis & Prioritization — Productboard AI</h3>
-<p><strong>Productboard</strong> has long been the gold standard for customer feedback management. Its 2026 AI layer, powered by OpenAI, automatically categorizes and links user insights to related features — even when customers describe the same problem in completely different words. Trend monitoring surfaces emerging user needs before they become urgent, and instant summaries condense long feedback threads into key takeaways in seconds.</p>
-<p>It integrates with Jira, Zendesk, Slack, Salesforce, and GitHub, giving product teams a single source of truth that connects customer pain points directly to the roadmap. With a G2 rating of 4.3/5 from 250+ reviews, it remains the most trusted tool for feedback-to-roadmap workflows.</p>
-<p><strong>Best for:</strong> Mid-to-large teams needing a structured, customer-centric prioritization system.</p>
-
-<h3>3. Sprint & Backlog Management — Jira AI (Rovo)</h3>
-<p><strong>Jira's Rovo AI</strong> is quietly becoming one of the most practical AI upgrades in the PM toolkit. Rather than requiring PMs to learn complex JQL queries, Rovo lets you ask questions in plain English: "Which stories have been open for more than two sprints?" or "Show me all bugs linked to the checkout flow." It answers instantly with charts, summaries, and actionable recommendations.</p>
-<p>Rovo also scores the highest on agentic capability among established platforms (90/100 in independent evaluations), making it best positioned for the next wave of autonomous PM workflows. For teams already in the Atlassian ecosystem, it requires no additional integration — it is built in.</p>
-<p><strong>Best for:</strong> Teams already using Jira who want AI insights without adding new tools to the stack.</p>
-
-<h3>4. Analytics & User Behavior — Amplitude AI</h3>
-<p><strong>Amplitude's "Ask Amplitude"</strong> feature is transformative for PMs who are not SQL experts. You type a natural language question — "Show me week-over-week retention for users who tried Feature X in their first three sessions" — and Amplitude translates it into the correct query, returns a chart, and adds an explanation. What used to require a data analyst and a 2-day turnaround now happens in 30 seconds.</p>
-<p>Its predictive cohort analysis and causal insights help PMs move from "what happened" to "why it happened" and "what will happen next" — which is the difference between reactive and proactive product management.</p>
-<p><strong>Best for:</strong> PMs who rely heavily on behavioral data and need analytics without deep technical dependency.</p>
-
-<h3>5. User Research & Interview Analysis — Otter.ai & Dovetail</h3>
-<p>User interviews are one of the most valuable PM activities — and one of the most time-consuming to process. <strong>Otter.ai</strong> provides real-time transcription with 95%+ accuracy, auto-generates meeting summaries, captures action items, and syncs directly to Notion, Jira, and Asana. For a PM conducting five customer interviews per week, it eliminates hours of manual note-taking.</p>
-<p><strong>Dovetail</strong> goes deeper: it organizes interview recordings, identifies recurring themes across sessions, and surfaces patterns you might miss when reviewing interviews one at a time. Together, these tools compress a week of research synthesis into a single afternoon.</p>
-<p><strong>Best for:</strong> Discovery-heavy roles, customer-facing PMs, and teams running frequent user research cycles.</p>
-
-<h3>6. Knowledge Management & Docs — Notion AI</h3>
-<p><strong>Notion AI</strong> has evolved into a full workspace intelligence layer. For PMs who already use Notion for roadmaps, specs, and feedback databases, the AI upgrade is seamless: it autofills databases with summaries, drafts content in your writing style, generates flowcharts from rough descriptions, translates documents, and automates meeting notes across integrations.</p>
-<p>By 2026, Notion's Custom Agents can run automated workflows with defined permissions — such as auto-summarizing customer calls added to a database and updating linked feature cards. It is the connective tissue of a modern PM's workspace.</p>
-<p><strong>Best for:</strong> PMs who live in Notion and want AI embedded in their day-to-day workflow rather than in a separate tool.</p>
-
-<h3>7. AI-Powered Roadmapping — Aha! AI</h3>
-<p><strong>Aha!</strong> remains one of the most comprehensive product management platforms, with AI capabilities that automate requirement gathering by summarizing customer feedback and converting qualitative insights into structured feature requests. Its AI prioritization engine factors in customer impact, revenue potential, and competitive landscape to suggest roadmap adjustments — turning scattered inputs into a coherent strategy.</p>
-<p>With notable customers including Siemens, LinkedIn, and Dell, Aha! earns a 4.4/5 G2 rating. The learning curve is steep, but for teams managing complex portfolios across multiple products, the strategic depth is unmatched.</p>
-<p><strong>Best for:</strong> Enterprise teams, senior PMs, and portfolio-level product leaders who need full-lifecycle strategic management.</p>
-
-<h3>Building Your AI PM Stack — The Simple Rule</h3>
-<p>The best PM stacks in 2026 are not the biggest. The best ones are <strong>small, purposeful, and deeply integrated</strong>. Start with the tool that solves your single biggest time drain — whether that is PRD writing, feedback synthesis, or analytics. Get value from it for 30 days. Then add the next one.</p>
-<div class="post-quote">"AI will significantly increase demand for people who can come up with clear specs for valuable things to build. AI co-pilots don't replace creativity — they supercharge it." — Andrew Ng</div>
-<p>The gap between teams using AI tools effectively and those still relying on manual processes widens every quarter. The time to build your stack is now.</p>
-`},
-
-  /* ── NEW POST 2 ── */
-  {id:'chatprd-vs-productboard-vs-jira-ai',
-   date:'Mar 15, 2026',
-   tag:'AI & PM',
-   title:'ChatPRD vs Productboard vs Jira AI: Which AI PM Tool Wins in 2026?',
-   excerpt:'Three AI-powered tools dominate the PM landscape — ChatPRD for documentation, Productboard for feedback, and Jira AI for sprint intelligence. Here is an honest, side-by-side breakdown to help you choose the right one for your workflow.',
-   full:`
-<h3>The 2026 PM Tool Problem: Too Many Options, Not Enough Clarity</h3>
-<p>Walk into any product team in 2026 and you will find PMs juggling an average of 5–7 tools. The promise of AI was to reduce that complexity. The reality is that AI features are now being bolted onto everything — which means choosing the right tool requires more discernment than ever, not less.</p>
-<p>Three tools consistently top the conversations: <strong>ChatPRD</strong> (documentation), <strong>Productboard</strong> (feedback and roadmapping), and <strong>Jira AI / Rovo</strong> (sprint and backlog management). This breakdown compares them honestly — where each wins, where each falls short, and which team type each serves best.</p>
-
-<h3>ChatPRD — The Documentation Specialist</h3>
-<p><strong>What it does well:</strong> ChatPRD turns rough product ideas into polished PRDs, user stories, and acceptance criteria in minutes. Its AI understands product strategy, not just writing — it actively coaches you to strengthen narratives, fill requirement gaps, and think through edge cases you may have missed. With 100,000+ PMs using it, it is the most widely adopted AI documentation tool on the market.</p>
-<p>Integration is a core strength: one-click export to Linear, Notion, Confluence, Google Docs, and direct Slack sharing keeps documents flowing into your team's existing tools. Its prototype generation via tools like v0 and Lovable is a genuinely novel feature for PMs who need to show rather than tell.</p>
-<p><strong>Where it falls short:</strong> ChatPRD is narrowly focused on documentation. It does not aggregate customer feedback, track sprint progress, or provide behavioral analytics. It is a specialist tool, not a platform.</p>
-<p><strong>Best for:</strong> Solo PMs, early-stage startups, teams producing high volumes of product documentation, and anyone looking to write at a more senior level faster.</p>
-<p><strong>Pricing:</strong> Free tier available. Paid plans for team features and advanced agentic capabilities.</p>
-
-<h3>Productboard — The Feedback & Roadmap Platform</h3>
-<p><strong>What it does well:</strong> Productboard is the most mature tool for closing the loop between customer feedback and product decisions. Its OpenAI-powered layer automatically categorizes feedback from emails, support tickets, Zendesk, Slack, and surveys — linking insights to features even when customers describe the same issue in different ways. The result is a living, prioritized roadmap that reflects real user needs rather than internal assumptions.</p>
-<p>With 6,000+ customers including Microsoft, Zoom, and Salesforce, and a G2 rating of 4.3/5, Productboard has enterprise-scale credibility. Its Jira integration is particularly strong — it syncs priorities directly to engineering backlogs, creating a seamless bridge between discovery and delivery.</p>
-<p><strong>Where it falls short:</strong> Cost is the most common complaint at scale. Enterprise pricing can reach $300–400 per maker monthly for large teams. The tool can feel overwhelming for new users, and its reporting capabilities are less advanced than dedicated analytics platforms.</p>
-<p><strong>Best for:</strong> Mid-to-large product teams with structured discovery processes, customer success integrations, and a need for board-level roadmap visibility.</p>
-<p><strong>Pricing:</strong> Free Starter plan. Essentials from $19/maker/month. Pro from $59/maker/month. Enterprise custom pricing.</p>
-
-<h3>Jira AI (Rovo) — The Sprint Intelligence Engine</h3>
-<p><strong>What it does well:</strong> For the 65%+ of product teams already inside the Atlassian ecosystem, Jira's Rovo AI is the lowest-friction AI upgrade available. Natural language queries replace complex JQL — ask "Which epics are at risk this quarter?" and get an instant, structured answer. Automated ticket classification, smart sprint summaries, and workload flagging keep teams moving without manual overhead.</p>
-<p>Rovo scores 90/100 on independent agentic capability evaluations — the highest of any established PM platform — positioning it strongly for the next wave of autonomous workflow execution. The Atlassian ecosystem advantage is significant: Jira, Confluence, and Trello share one data layer, giving Rovo access to the full picture of delivery, documentation, and planning.</p>
-<p><strong>Where it falls short:</strong> Rovo is strongest inside the Atlassian world. If your team uses Linear, Notion, or other tools as primary surfaces, its value diminishes. It also does not replace a dedicated feedback or analytics tool — it is a sprint intelligence layer, not a product strategy platform.</p>
-<p><strong>Best for:</strong> Teams running Agile delivery in Jira who want AI insights embedded in existing workflows without adding new tools or logins.</p>
-<p><strong>Pricing:</strong> Jira Product Discovery from $10/creator/month (Standard). Rovo included in Atlassian platform plans.</p>
-
-<h3>Side-by-Side Summary</h3>
-<p>If your biggest pain point is <strong>writing requirements and documentation</strong> → start with <strong>ChatPRD</strong>. If it is <strong>processing customer feedback and building a customer-centric roadmap</strong> → invest in <strong>Productboard</strong>. If it is <strong>sprint visibility and backlog intelligence inside Jira</strong> → activate <strong>Jira AI / Rovo</strong>.</p>
-<p>For most mature product teams, the answer is not one of these — it is <strong>all three in combination</strong>: ChatPRD for writing, Productboard for feedback, and Jira AI for delivery. They do not overlap; they stack.</p>
-<div class="post-quote">"The best product managers in 2026 won't be those who avoid AI, but those who leverage it to spend more time with customers and less time on administrative work." — Marty Cagan, SVPG</div>
-`},
-
-  /* ── NEW POST 3 ── */
-  {id:'ai-pm-stack-guide-2026',
-   date:'Mar 10, 2026',
-   tag:'AI & PM',
-   title:'How to Build Your AI PM Stack in 2026 — A Practical Guide',
-   excerpt:'Most PMs add tools reactively and end up with a bloated, disconnected stack. Here is a step-by-step framework for building a lean, integrated AI PM stack that actually reduces your workload — without creating new ones.',
-   full:`
-<h3>The Problem with Most PM Tool Stacks</h3>
-<p>The average product team runs <strong>5–7 separate tools</strong> for roadmapping, analytics, feedback, documentation, sprint management, and communication. Each tool was added to solve a real problem. But over time, the combined weight of context-switching, data inconsistency, and integration maintenance creates a new problem bigger than the ones being solved.</p>
-<p>AI does not automatically fix this. In fact, AI features are now built into almost every PM tool, which means <strong>adding AI tools without a clear framework will make the problem worse</strong>. The goal is not a bigger stack — it is a smarter, leaner one.</p>
-
-<h3>Step 1 — Audit Where Your Time Actually Goes</h3>
-<p>Before choosing any tool, spend one week tracking where your hours go. Most PMs are surprised: the typical breakdown is 30–40% documentation and writing, 20–25% meetings and note-taking, 15–20% feedback synthesis and prioritization, and 10–15% reporting and stakeholder updates. Less than 20% is deep strategic thinking — the part AI should be protecting, not replacing.</p>
-<p>Once you know your biggest time drain, you have a clear first target. <strong>AI tools deliver the most value when they attack the largest time sink first.</strong> Tools adopted reactively ("everyone is using it") rarely stick.</p>
-
-<h3>Step 2 — Build Around Four Core Layers</h3>
-<p>A lean 2026 AI PM stack covers four layers — one primary tool per layer:</p>
-<p><strong>Layer 1 — Research & Discovery:</strong> Perplexity AI for rapid market research, competitor analysis, and trend scanning. It keeps a full conversation thread as you move from market size to competitor moves to technical constraints — compressing three hours of research into 30 minutes. Pair with Dovetail or Otter.ai for user interview analysis.</p>
-<p><strong>Layer 2 — Documentation & Requirements:</strong> ChatPRD for PRDs, user stories, and acceptance criteria. Notion AI for roadmaps, meeting notes, knowledge bases, and workspace automation. These two tools cover 80% of a PM's writing output.</p>
-<p><strong>Layer 3 — Feedback & Prioritization:</strong> Productboard AI for aggregating, categorizing, and prioritizing customer feedback at scale. For smaller teams on tighter budgets, Canny (from $79/month flat-rate) is a strong lean alternative that takes 1–2 hours to implement versus Productboard's 4–8 weeks.</p>
-<p><strong>Layer 4 — Analytics & Delivery:</strong> Amplitude AI for behavioral analytics and user behavior querying in plain English. Jira AI / Rovo for sprint management, backlog intelligence, and delivery tracking — especially if you are already in the Atlassian ecosystem.</p>
-
-<h3>Step 3 — Prioritize Integration Over Features</h3>
-<p>The most common mistake when building a PM stack is optimising for individual tool features rather than how tools connect to each other. <strong>A tool that is 80% as capable but integrates seamlessly with your existing stack beats a best-in-class tool that creates a data silo every time.</strong></p>
-<p>The practical test: before adding any new tool, ask — does it push data into Jira, Slack, or Notion without manual work? If the answer is no, the overhead of maintaining it will quietly erode the time it saves.</p>
-
-<h3>Step 4 — Apply the Privacy Rule</h3>
-<p>This is the step most PMs skip until it is too late. Many AI tools train on the data you input. For sensitive product strategy, competitive intelligence, and anything involving personal user data, use enterprise versions with data isolation guarantees — or local AI agents that do not send data externally.</p>
-<p>The practical rule: <strong>public-facing information and internal process documentation can go through standard AI tools. Product strategy, user data, and unreleased roadmap details require enterprise agreements or local AI.</strong> A small discipline investment up front protects your company and builds a culture of responsible AI use.</p>
-
-<h3>Step 5 — Commit to One Tool at a Time</h3>
-<p>The fastest way to get no value from AI tools is to adopt five simultaneously. Instead, <strong>commit to one tool for 30 days</strong>. Measure time saved. Document the workflow changes. Then add the next one. This approach builds genuine organizational muscle for working with AI — learning when to trust its output, when to override it, and how to incorporate AI-generated insights into stakeholder conversations.</p>
-<p>Teams that follow this adoption pattern report consistent time savings of <strong>50–60% on administrative work</strong>, freeing an average of 8–12 hours per week for the strategic, customer-facing activities that actually move products forward.</p>
-
-<h3>The Recommended Starter Stack for 2026</h3>
-<p>For a PM who wants to start immediately with proven tools: begin with <strong>Otter.ai</strong> for meeting notes (free tier is excellent), add <strong>ChatPRD</strong> for documentation, then build in <strong>Amplitude AI</strong> for analytics. These three tools, adopted in sequence over 90 days, will deliver measurable impact before you invest in broader platform changes.</p>
-<div class="post-quote">"The best stacks in 2026 will look boring. A small number of tools used consistently, with clear purpose and limits." — iamprayerson.com, 2026 AI PM Stack Guide</div>
-`},
-
-  /* ── EXISTING POSTS BELOW — DO NOT REMOVE ── */
-  {id:'future-pm',date:'Mar 22, 2025',tag:'AI & PM',title:'The Future of Product Management: AI, UX, and the PM Role',excerpt:'How AI and shifting UX expectations will reshape the PM role in the coming decade.',
-   full:'<h3>1. AI as Both a Tool and a Product Feature</h3><p>Artificial Intelligence will revolutionize how PMs work and what products can do. Beyond AI-powered features like recommendation engines or chatbots, AI will become a critical PM tool — helping you analyze user feedback instantly, prioritize backlogs predictively, and generate prototype ideas from market trends.</p><h3>2. UX Will Be More Intuitive, Personalized, and Essential</h3><p>Personalization powered by AI and machine learning will make products feel like they were built just for each user. PMs must shift focus from just functionality to <strong>emotional connection and delight</strong>.</p><h3>3. Data Literacy Will Be a Core PM Skill</h3><p>Understanding data won\'t be optional — it will be foundational. PMs need behavioral analytics, predictive modeling, and user segmentation to build precise roadmaps.</p><h3>4. Ethical Judgment and Purpose-Driven Products Will Rise</h3><p>Privacy concerns, bias in AI, and long-term societal effects will become front and center. The PM of 2030 must balance innovation with ethics — building products that protect users and foster trust.</p><h3>5. Continuous Learning and Adaptability Are Non-Negotiable</h3><p>Those who can quickly pivot strategies, adopt new tools, and lead teams through uncertainty will thrive.</p><div class="post-quote">"Despite all the changes, the heart of product management stays the same: building products that solve meaningful problems and create real value."</div>'},
+  {id:'agentic-ai-guide',date:'Mar 2026',tag:'AI & PM',title:'Agentic AI: A Practitioner&#39;s Complete Guide — 2026&#8211;2027 Edition',excerpt:'A 120-page practitioner&#39;s guide to Agentic AI covering autonomous agents, reasoning loops, tool design, LangChain/CrewAI/AutoGen frameworks, multi-agent systems, RAG, vector databases, safety engineering, production deployment, and the research frontier.'},
+  {id:'top-ai-tools-pm-2026',date:'Mar 20, 2026',tag:'AI & PM',title:'Top AI Tools Every Product Manager Must Know in 2026',excerpt:'AI has moved from optional to essential for PMs. A practical, research-backed guide to the best AI tools transforming product management in 2026 — from documentation to discovery, analytics, and agentic workflows.'},
+  {id:'chatprd-vs-productboard-vs-jira-ai',date:'Mar 15, 2026',tag:'AI & PM',title:'ChatPRD vs Productboard vs Jira AI: Which AI PM Tool Wins in 2026?',excerpt:'Three AI-powered tools dominate the PM landscape — ChatPRD for documentation, Productboard for feedback, and Jira AI for sprint intelligence. An honest, side-by-side breakdown to help you choose.'},
+  {id:'ai-pm-stack-guide-2026',date:'Mar 10, 2026',tag:'AI & PM',title:'How to Build Your AI PM Stack in 2026 — A Practical Guide',excerpt:'Most PMs add tools reactively and end up with a bloated, disconnected stack. A step-by-step framework for building a lean, integrated AI PM stack that actually reduces your workload.'},
+  {id:'future-pm',date:'Mar 22, 2025',tag:'AI & PM',title:'The Future of Product Management: AI, UX, and the PM Role',excerpt:'How AI and shifting UX expectations will reshape the PM role in the coming decade.'},
   {id:'customer-centric',date:'Jan 10, 2025',tag:'Strategy',title:'Building a Customer-Centric Product',excerpt:'Data-driven decision-making is the cornerstone of modern PM. Effective PMs focus on KPIs aligned with product goals, business model, and growth stage.'},
   {id:'kpis-pm',date:'Jan 10, 2025',tag:'Analytics',title:'Key KPIs Every Product Manager Should Track',excerpt:'From retention to activation metrics — the indicators that give insight into product health, user behavior, and financial viability.'},
-  {id:'conflicting-priorities',date:'Dec 14, 2024',tag:'Strategy',title:'How PMs Balance Conflicting Priorities',excerpt:'Executives want revenue. Sales wants features. Engineering wants stability. Here\'s how great PMs navigate competing demands with clarity.'},
+  {id:'conflicting-priorities',date:'Dec 14, 2024',tag:'Strategy',title:'How PMs Balance Conflicting Priorities',excerpt:'Executives want revenue. Sales wants features. Engineering wants stability. How great PMs navigate competing demands with clarity.'},
   {id:'mongodb-pm',date:'Nov 5, 2024',tag:'Technology',title:'MongoDB Basics: What Every PM Should Know',excerpt:'Understanding the technologies behind your product helps you communicate with engineering and prioritize features realistically.'},
   {id:'types-pm',date:'Sep 20, 2024',tag:'Career',title:'Different Types of Product Managers',excerpt:'Growth PMs, Platform PMs, Technical PMs — understanding these types helps you identify where you fit and what skills to develop.'},
-  {id:'pm-gtm',date:'Jul 10, 2024',tag:'Strategy',title:'The PM\'s Role in Launch and Go-to-Market (GTM)',excerpt:'The PM acts as the central hub connecting engineering, marketing, sales, and ops to ensure a smooth, successful product launch.'},
+  {id:'pm-gtm',date:'Jul 10, 2024',tag:'Strategy',title:'The PM Role in Launch and Go-to-Market (GTM)',excerpt:'The PM acts as the central hub connecting engineering, marketing, sales, and ops to ensure a smooth, successful product launch.'},
   {id:'idea-to-product',date:'May 12, 2023',tag:'Strategy',title:'How to Run an Effective Idea-to-Product Strategy',excerpt:'Build a system to capture ideas from feedback, market research, competitor analysis, and brainstorming — then execute with precision.'},
   {id:'break-into-pm',date:'Apr 27, 2023',tag:'Career',title:'How to Break Into Product Management',excerpt:'How people without coding backgrounds become successful Product Managers — a practical guide for aspiring PMs.'},
   {id:'working-devs',date:'Mar 22, 2023',tag:'Collaboration',title:'Working with Developers: What Every PM Should Know',excerpt:'Your relationship with developers is critical. Building a respectful, collaborative relationship ensures better products and smoother cycles.'},
   {id:'pm-priority',date:'Jan 10, 2023',tag:'Strategy',title:'How Great PMs Prioritize Features (And Say No with Grace)',excerpt:'One of the most challenging PM responsibilities is deciding what NOT to build. Learn how to say no while keeping stakeholders aligned.'},
   {id:'pm-tools',date:'Nov 19, 2022',tag:'Tools',title:'PM Tools You Need to Know',excerpt:'The right tools for roadmapping, analytics, collaboration, and user research make you significantly more effective as a PM.'},
   {id:'pd-lifecycle',date:'Jul 5, 2022',tag:'Strategy',title:'The Product Development Lifecycle Explained',excerpt:'From raw concept to real-world launch and beyond — the structured process behind every successful product.'},
-  {id:'apis-sdks',date:'Nov 3, 2021',tag:'Technology',title:'APIs & SDKs Basics',excerpt:'Understanding the fundamental difference between APIs and SDKs helps PMs collaborate more effectively with engineering teams.'},
+  {id:'apis-sdks',date:'Nov 3, 2021',tag:'Technology',title:'APIs and SDKs Basics',excerpt:'Understanding the fundamental difference between APIs and SDKs helps PMs collaborate more effectively with engineering teams.'},
   {id:'product-backlog',date:'Oct 10, 2021',tag:'Agile',title:'Product Backlog Strength Really Matters',excerpt:'Understanding backlog management is essential for every Product Owner who wants to deliver consistent, prioritized value sprint after sprint.'},
-  {id:'product-owner',date:'Jul 9, 2021',tag:'Agile',title:'Product Owner: A Person of Multifaceted Talent',excerpt:'The PO sits at the intersection of business, technology, and user needs. Learn what makes this role uniquely challenging and rewarding.'},
+  {id:'product-owner',date:'Jul 9, 2021',tag:'Agile',title:'Product Owner: A Person of Multifaceted Talent',excerpt:'The PO sits at the intersection of business, technology, and user needs. What makes this role uniquely challenging and rewarding.'},
   {id:'req-priority',date:'Jul 5, 2020',tag:'Agile',title:'Product Owner: Requirement Prioritization Techniques',excerpt:'Requirement prioritization is critical to building products that align with business goals and deliver maximum user value efficiently.'},
   {id:'stakeholder-mgmt',date:'Jun 12, 2020',tag:'Business Analysis',title:'Business Analysis — Stakeholder Management',excerpt:'Stakeholder Management is a key BA role. Learn the two main types and how to manage competing interests across organizations effectively.'},
-  {id:'req-elicitation',date:'Nov 12, 2019',tag:'Business Analysis',title:'Requirements – Elicitation and More',excerpt:'Requirements are a usable representation of a need. Learn the three types every BA must understand and the best elicitation techniques.'},
-  {id:'salesforce-limits',date:'Aug 12, 2019',tag:'Technology',title:'Salesforce Limitations',excerpt:'Understanding Salesforce\'s limitations helps PMs and BAs plan architecture and solutions proactively, avoiding surprises in delivery.'},
-  {id:'pm-intro',date:'Apr 5, 2019',tag:'PM Basics',title:'Product Management – An Introduction',excerpt:'Products are for everyday lives. In IT environments, Products span wide aspects — from visually impacting UIs to code snippets and APIs.'},
+  {id:'req-elicitation',date:'Nov 12, 2019',tag:'Business Analysis',title:'Requirements — Elicitation and More',excerpt:'Requirements are a usable representation of a need. Learn the three types every BA must understand and the best elicitation techniques.'},
+  {id:'salesforce-limits',date:'Aug 12, 2019',tag:'Technology',title:'Salesforce Limitations',excerpt:'Understanding Salesforce limitations helps PMs and BAs plan architecture and solutions proactively, avoiding surprises in delivery.'},
+  {id:'pm-intro',date:'Apr 5, 2019',tag:'PM Basics',title:'Product Management — An Introduction',excerpt:'Products are for everyday lives. In IT environments, Products span wide aspects — from visually impacting UIs to code snippets and APIs.'},
   {id:'product-vision',date:'Jun 12, 2019',tag:'Strategy',title:'Product Vision and Product Strategy',excerpt:'Product Vision is the benchmarking thought for any product. Product Strategy is the roadmap to reach that vision with clarity and purpose.'},
   {id:'yaml',date:'Jun 12, 2019',tag:'Technology',title:'YAML: Basic Understanding',excerpt:'YAML is a human-friendly data serialization language commonly used for config files — a foundational concept every PM should understand.'},
   {id:'disqus',date:'Jun 12, 2019',tag:'Tips',title:'Comment Section for Google Sites using DISQUS',excerpt:'Adding a comment section to your Google Site is easy with DISQUS. Enable community engagement on your Google Sites pages for free.'},
+  {id:'genai-product-manager-2026',date:'Feb 28, 2026',tag:'AI & PM',title:'GenAI for Product Managers: What You Actually Need to Know',excerpt:'Generative AI is reshaping how PMs work — from writing PRDs to synthesizing user research. Here is a practical, no-hype guide to what GenAI can actually do for your product workflow today.'},
+  {id:'digital-transformation-lessons',date:'Feb 15, 2026',tag:'Strategy',title:'5 Hard Lessons From Leading Digital Transformation Across 13 APAC Markets',excerpt:'After leading enterprise digital transformation at DKSH across 13 APAC markets — from Thailand to Malaysia, Singapore to Australia — here are the five lessons that no consulting deck will tell you.'},
+  {id:'scrum-product-owner-guide',date:'Jan 20, 2026',tag:'Agile',title:'The Complete Scrum Product Owner Playbook for 2026',excerpt:'From backlog mastery to stakeholder alignment, sprint reviews to release planning — a comprehensive guide to being a highly effective Product Owner in modern Agile teams.'},
+  {id:'data-analytics-pm',date:'Jan 5, 2026',tag:'Analytics',title:'Data Analytics for Product Managers: From SQL to Dashboards',excerpt:'You do not need to be a data scientist to be data-driven. Here is a practical guide to the analytics skills every PM needs — from writing basic SQL to building executive dashboards in Power BI.'},
+  {id:'ai-product-owner-role',date:'Dec 10, 2025',tag:'AI & PM',title:'The AI Product Owner: A New Role for a New Era',excerpt:'As AI becomes a core product capability, a new specialization is emerging — the AI Product Owner. Here is what this role looks like, what skills it demands, and how to position yourself for it.'},
+  {id:'enterprise-crm-implementation',date:'Nov 20, 2025',tag:'Strategy',title:'How to Lead a CRM Implementation That Actually Succeeds',excerpt:'CRM implementations have a notoriously high failure rate. Here is what separates the projects that deliver measurable ROI from the ones that become expensive shelfware.'},
+  {id:'writing-better-prd',date:'Oct 30, 2025',tag:'Business Analysis',title:'How to Write a PRD That Engineering Actually Reads',excerpt:'Most Product Requirements Documents are too long, too vague, or both. Here is how to write PRDs that engineering teams find useful, reference throughout development, and wish every PM would write.'},
+  {id:'power-bi-for-pm',date:'Oct 10, 2025',tag:'Analytics',title:'Power BI for Product Managers: Build Your First KPI Dashboard',excerpt:'A step-by-step guide to building a product KPI dashboard in Power BI — from connecting your data sources to creating visualisations that actually drive decisions.'},
+  {id:'agile-transformation-lessons',date:'Sep 5, 2025',tag:'Agile',title:'Agile Transformation Lessons From the Enterprise Trenches',excerpt:'Most Agile transformations fail to deliver their promised benefits. After leading Agile adoption across banking, insurance, and FMCG organisations, here are the hard-won lessons that actually move the needle.'},
+  {id:'saas-metrics-guide',date:'Aug 1, 2025',tag:'Analytics',title:'The Complete SaaS Metrics Guide for Product Managers',excerpt:'MRR, ARR, CAC, LTV, churn, NPS — a comprehensive breakdown of every SaaS metric that matters, how to calculate it, and what to do when it moves in the wrong direction.'},
+  {id:'as400',date:'Jun 12, 2019',tag:'Technology',title:'Application Systems 400 (AS400) — Basics',excerpt:'IBM announced the AS400 in the late 80s as the newest member of midrange computers. From security levels and architecture to key objects, libraries, and DDS — a foundational guide to AS400 for developers and analysts.'},
+  {id:'icetools',date:'Jun 12, 2019',tag:'Technology',title:'JCL Programs — ICETOOL',excerpt:'ICETOOL is used to create reports containing the number of occurrences of unique values. A practical JCL example showing how to generate occurrence counts using OCCUR with multiple field combinations.'},
+  {id:'jcl-programs',date:'Jun 12, 2019',tag:'Technology',title:'JCL Programs — Samples for COBOL, DLI, DB2, BMP',excerpt:'A comprehensive reference of JCL program types used to compile COBOL programs in Mainframe systems — covering COBOL+DLI, COBOL+DLI+DB2, COBOL+BMP, and COBOL+BMP+DB2 configurations with PARM examples.'},
+  {id:'unikix-experience',date:'Jun 12, 2019',tag:'Technology',title:'Unikix Experience — Mainframe Rehosting on AIX',excerpt:'A unique experience working with UniKix mainframe rehosting software from Clerity Solutions, enabling legacy mainframe applications to run on IBM AIX, HP-UX, Sun Solaris, and Linux without rewriting in a new language.'},
+  {id:'cobol-performance',date:'Jun 12, 2019',tag:'Technology',title:'COBOL Performance Improvement Tips and Tricks',excerpt:'Practical techniques for improving COBOL program efficiency — from arithmetic optimizations and compiler options to VSAM buffer tuning, sorting, PERFORM vs inline code, and INITIALIZE best practices.'},
+  {id:'mainframe-tips-tricks',date:'Jun 12, 2019',tag:'Technology',title:'100 Mainframe Tips and Tricks',excerpt:'100 collected Mainframe tips and tricks covering ISPF, JCL, COBOL, VSAM, FileAid, SORT, SDSF, CICS, and DB2 — practical knowledge for every mainframe developer, from dataset management to performance tuning.'}
 ];
-var ALL_TAGS=['All',...[...new Set(BLOGS.map(function(b){return b.tag}))].sort()];
+var ALL_TAGS=['All'].concat([...new Set(BLOGS.map(function(b){return b.tag}))].sort());
 var activeTag='All';
+
 function initBlogs(){
-  document.getElementById('fps').innerHTML=ALL_TAGS.map(function(t){return '<button class="fp'+(t===activeTag?' on':'')+'" onclick="setTag(\''+t+'\')">'+t+'</button>'}).join('');
+  document.getElementById('fps').innerHTML=ALL_TAGS.map(function(t){
+    return '<button class="fp'+(t===activeTag?' on':'')+'" onclick="setTag(\''+t+'\')">'+t+'</button>';
+  }).join('');
   renderBlogs();
 }
-function setTag(t){activeTag=t;document.querySelectorAll('.fp').forEach(function(f){f.classList.toggle('on',f.textContent===t)});renderBlogs()}
+
+function setTag(t){
+  activeTag=t;
+  document.querySelectorAll('.fp').forEach(function(f){f.classList.toggle('on',f.textContent===t)});
+  renderBlogs();
+}
+
 function renderBlogs(){
-  var q=(document.getElementById('srch')?document.getElementById('srch').value:'').toLowerCase();
-  var items=BLOGS.filter(function(b){return(activeTag==='All'||b.tag===activeTag)&&(!q||b.title.toLowerCase().includes(q)||b.excerpt.toLowerCase().includes(q))});
-  var g=document.getElementById('bgrid'),no=document.getElementById('noPosts');
+  var srchEl=document.getElementById('srch');
+  var q=srchEl?srchEl.value.toLowerCase():'';
+  var items=BLOGS.filter(function(b){
+    return (activeTag==='All'||b.tag===activeTag)&&
+           (!q||b.title.toLowerCase().indexOf(q)>-1||b.excerpt.toLowerCase().indexOf(q)>-1);
+  });
+  var g=document.getElementById('bgrid');
+  var no=document.getElementById('noPosts');
+  if(!g||!no)return;
   no.style.display=items.length?'none':'block';
   g.innerHTML=items.map(mkCard).join('');
   setTimeout(initReveal,60);
 }
-function mkCard(b){return '<div class="bc reveal" onclick="openPost(\''+b.id+'\')"><div class="bc-tag">'+b.tag+'</div><div class="bc-title">'+b.title+'</div><div class="bc-excerpt">'+b.excerpt+'</div><div class="bc-foot"><span class="bc-date">'+b.date+'</span><span class="bc-arr">↗</span></div></div>'}
+
+function mkCard(b){
+  return '<div class="bc reveal" onclick="openPost(\''+b.id+'\')">'+
+    '<div class="bc-tag">'+b.tag+'</div>'+
+    '<div class="bc-title">'+b.title+'</div>'+
+    '<div class="bc-excerpt">'+b.excerpt+'</div>'+
+    '<div class="bc-foot"><span class="bc-date">'+b.date+'</span><span class="bc-arr">↗</span></div>'+
+    '</div>';
+}
+
 function openPost(id){
-  var b=BLOGS.find(function(x){return x.id===id});if(!b)return;
-  document.getElementById('postContent').innerHTML='<div class="po-tag">'+b.tag+'</div><div class="po-title">'+b.title+'</div><div class="po-meta"><span>'+b.date+'</span><span>·</span><span>Harikumar R</span><span>·</span><span>Ideations By Hari</span></div><div class="post-body">'+(b.full||'<p>'+b.excerpt+'</p><div class="post-quote">"Keep Learning and Experimenting Something new always..." — Harikumar R</div><a class="orig-link" href="https://www.ideationsbyhari.com/blogs" target="_blank">Read Full Article ↗</a>')+'</div>';
-  document.getElementById('relGrid').innerHTML=BLOGS.filter(function(x){return x.id!==id}).slice(0,3).map(mkCard).join('');
+  var b=BLOGS.find(function(x){return x.id===id});
+  if(!b)return;
+  var fullHtml=(BLOG_CONTENT&&BLOG_CONTENT[id])?BLOG_CONTENT[id]:'<p>'+b.excerpt+'</p>';
+  var body='<div class="post-body">'+fullHtml+'</div>';
+  document.getElementById('postContent').innerHTML=
+    '<div class="po-tag">'+b.tag+'</div>'+
+    '<div class="po-title">'+b.title.replace(/&#39;/g,"'").replace(/&#8211;/g,"–")+'</div>'+
+    '<div class="po-meta"><span>'+b.date+'</span><span>·</span><span>Harikumar R</span><span>·</span><span>Ideations By Hari</span></div>'+
+    body;
+  document.getElementById('relGrid').innerHTML=
+    BLOGS.filter(function(x){return x.id!==id}).slice(0,3).map(mkCard).join('');
   document.getElementById('postOverlay').classList.add('open');
   document.body.style.overflow='hidden';
-
   setTimeout(initReveal,80);
 }
-function closePost(){document.getElementById('postOverlay').classList.remove('open');document.body.style.overflow=''}
+
+function closePost(){
+  document.getElementById('postOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+/* ── INIT ── */
 initBlogs();
 
 /* CONTACT FORM — Formspree */
 (function(){
-  var form = document.getElementById('contactForm');
-  if(!form) return;
-  form.addEventListener('submit', function(e){
+  var form=document.getElementById('contactForm');
+  if(!form)return;
+  form.addEventListener('submit',function(e){
     e.preventDefault();
-    var btn = form.querySelector('.fsub');
-    var ok  = document.getElementById('formOk');
-    var err = document.getElementById('formErr');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-    ok.style.display  = 'none';
-    err.style.display = 'none';
-    fetch('https://formspree.io/f/mbdzbrvg', {
-      method:  'POST',
-      headers: {'Accept':'application/json'},
-      body:    new FormData(form)
+    var btn=form.querySelector('.fsub');
+    var ok=document.getElementById('formOk');
+    var err=document.getElementById('formErr');
+    btn.textContent='Sending...';
+    btn.disabled=true;
+    ok.style.display='none';
+    err.style.display='none';
+
+    /* Build JSON payload from named fields */
+    var data={};
+    var inputs=form.querySelectorAll('input[name],textarea[name]');
+    inputs.forEach(function(el){data[el.name]=el.value;});
+
+    fetch('https://formspree.io/f/mbdzbrvg',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Accept':'application/json'
+      },
+      body:JSON.stringify(data)
     })
-    .then(function(res){ return res.json().then(function(d){ return {ok:res.ok,data:d}; }); })
+    .then(function(res){
+      return res.json().then(function(d){return{status:res.status,ok:res.ok,data:d};});
+    })
     .then(function(r){
       if(r.ok){
-        ok.style.display = 'block';
+        ok.style.display='block';
         form.reset();
-        /* GA4 event */
-        if(typeof gtag === 'function') gtag('event','contact_form_submit',{event_category:'engagement'});
-      } else {
-        err.style.display = 'block';
+        if(typeof gtag==='function')gtag('event','contact_form_submit',{event_category:'engagement'});
+      }else{
+        /* Show actual Formspree error in console for debugging */
+        console.error('Formspree error',r.status,r.data);
+        err.style.display='block';
       }
     })
-    .catch(function(){ err.style.display = 'block'; })
-    .finally(function(){ btn.textContent = 'Send Message →'; btn.disabled = false; });
+    .catch(function(e){
+      console.error('Form fetch error',e);
+      err.style.display='block';
+    })
+    .finally(function(){btn.textContent='Send Message →';btn.disabled=false;});
   });
 })();
 </script>
+
+
+
+
+
+<!-- ═══ BLOG FULL CONTENT (hidden template — never rendered) ═══ -->
+
+
+
 </body>
 </html>
